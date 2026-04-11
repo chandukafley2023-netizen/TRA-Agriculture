@@ -3,173 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Hydroponics & Agriculture</title>
+    <title>Hydroponics Dashboard | TRA Agriculture</title>
     <style>
-        /* CSS Styling */
+        /* Modern, Dark Tech-Dashboard Styling */
         :root {
-            --primary-green: #2e7d32;
-            --light-green: #a5d6a7;
-            --dark-bg: #1b1f1c;
-            --text-dark: #333333;
-            --text-light: #f4f4f9;
+            --bg-color: #0f172a; /* Dark slate blue */
+            --panel-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981; /* Emerald green */
+            --accent-blue: #3b82f6;
+            --warning-orange: #f59e0b;
+            --danger-red: #ef4444;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
-            color: var(--text-dark);
-            background-color: #f9fbf9;
         }
 
-        /* Header & Navigation */
-        header {
-            background-color: var(--primary-green);
-            color: var(--text-light);
-            padding: 1rem 0;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-
+        /* Navigation */
         nav {
-            margin-top: 10px;
+            background-color: #020617;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-green);
         }
 
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            margin: 0 15px;
+        .logo {
+            font-size: 1.5rem;
             font-weight: bold;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
             transition: color 0.3s ease;
         }
 
-        nav a:hover {
-            color: var(--light-green);
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-green);
         }
 
-        /* Hero Section */
-        .hero {
-            background-color: var(--light-green);
-            text-align: center;
-            padding: 4rem 2rem;
-            border-bottom: 5px solid var(--primary-green);
-        }
-
-        .hero h2 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            color: var(--primary-green);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* Facilities Section */
-        .facilities {
-            padding: 4rem 2rem;
+        /* Main Dashboard Container */
+        .dashboard {
+            padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .facilities h2 {
-            text-align: center;
-            font-size: 2rem;
-            color: var(--primary-green);
-            margin-bottom: 3rem;
+        /* System Status Banner */
+        .status-banner {
+            background-color: var(--panel-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        .grid {
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .pulse-dot {
+            width: 15px;
+            height: 15px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Sensor Grid Layout */
+        .sensor-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
+        /* Sensor Cards */
         .card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-top: 4px solid var(--primary-green);
-            transition: transform 0.3s ease;
+            background-color: var(--panel-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-top: 4px solid var(--accent-blue);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
         }
 
-        .card h3 {
-            color: var(--primary-green);
+        .card.greenhouse { border-top-color: var(--accent-green); }
+        .card.mushroom { border-top-color: var(--warning-orange); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .data-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+            display: flex;
+            align-items:baseline;
+            gap: 5px;
+        }
+
+        .unit {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        /* Activity Log */
+        .activity-log {
+            background-color: var(--panel-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .activity-log h3 {
             margin-top: 0;
+            color: var(--accent-green);
         }
 
-        .card p {
-            line-height: 1.6;
-            color: #555;
+        .log-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-            text-align: center;
-            padding: 2rem;
-            margin-top: 2rem;
+        .log-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .log-list li:last-child {
+            border-bottom: none;
+        }
+
+        .log-time {
+            color: var(--accent-blue);
+            font-family: monospace;
+            margin-right: 10px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 15px; }
+            .status-banner { flex-direction: column; gap: 15px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>School Hydroponics Hub</h1>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#facilities">Our Campus</a>
-            <a href="#about">About Us</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+    <nav>
+        <div class="logo">🌱 TRA Agri-Tech Hub</div>
+        <div class="nav-links">
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Greenhouses</a>
+            <a href="#">Mushroom Hut</a>
+            <a href="#">Our Team</a>
+        </div>
+    </nav>
 
-    <main>
-        <section id="home" class="hero">
-            <h2>Growing the Future, Today.</h2>
-            <p>Welcome to our school's agricultural initiative! We are blending technology, biology, and sustainability to grow fresh produce right here on campus. Explore our different growing environments and see what we're cultivating this season.</p>
-        </section>
-
-        <section id="facilities" class="facilities">
-            <h2>Our Growing Facilities</h2>
-            <div class="grid">
-                
-                <div class="card">
-                    <h3>🥬 Twin Greenhouses</h3>
-                    <p>We operate two state-of-the-art greenhouses dedicated to our hydroponic systems. By growing without soil, we save water and maximize space. These climate-controlled environments allow us to grow fresh leafy greens, tomatoes, and herbs year-round, regardless of the weather outside.</p>
-                </div>
-
-                <div class="card">
-                    <h3>🍄 The Mushroom Hut</h3>
-                    <p>Step into the dark and humid environment of our dedicated Mushroom Hut! Here, we cultivate various strains of edible fungi. This facility teaches us about decomposition, humidity control, and alternative, highly sustainable food sources.</p>
-                </div>
-
-                <div class="card">
-                    <h3>🌻 Outdoor Garden</h3>
-                    <p>While we love high-tech farming, we haven't forgotten our roots. Our traditional outdoor soil garden focuses on seasonal crops, composting, and supporting local pollinators. It's the perfect place to get our hands dirty and learn about soil ecology.</p>
-                </div>
-
+    <main class="dashboard">
+        
+        <!-- System Status -->
+        <section class="status-banner">
+            <div>
+                <h2 style="margin: 0; font-size: 1.8rem;">Live Operations</h2>
+                <p style="margin: 5px 0 0 0; color: var(--text-muted);">Real-time monitoring from the TRA campus</p>
+            </div>
+            <div class="status-indicator">
+                <div class="pulse-dot" style="background-color: var(--warning-orange); box-shadow: 0 0 10px var(--warning-orange);"></div>
+                Waiting for Sensor Data...
             </div>
         </section>
+
+        <!-- Sensor Data Grid -->
+        <section class="sensor-grid">
+            
+            <!-- Greenhouse 1: Temperature -->
+            <div class="card greenhouse">
+                <div class="card-header">
+                    <span>GH-1 Water Temp</span>
+                    <span>🌡️</span>
+                </div>
+                <h3 class="data-value"><span id="gh1-temp">0.0</span><span class="unit">°C</span></h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Target: 22.0°C</p>
+            </div>
+
+            <!-- Greenhouse 1: pH Level -->
+            <div class="card greenhouse">
+                <div class="card-header">
+                    <span>GH-1 pH Level</span>
+                    <span>💧</span>
+                </div>
+                <h3 class="data-value"><span id="gh1-ph">0.0</span><span class="unit">pH</span></h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Optimal range: 5.5 - 6.5</p>
+            </div>
+
+            <!-- Mushroom Hut: Humidity -->
+            <div class="card mushroom">
+                <div class="card-header">
+                    <span>Mushroom Hut Humidity</span>
+                    <span>🌫️</span>
+                </div>
+                <h3 class="data-value"><span id="mush-hum">0</span><span class="unit">%</span></h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Misting pump: STANDBY</p>
+            </div>
+
+            <!-- Main Reservoir: Nutrient Level -->
+            <div class="card">
+                <div class="card-header">
+                    <span>Reservoir Nutrient (EC)</span>
+                    <span>🧪</span>
+                </div>
+                <h3 class="data-value"><span id="res-ec">0.0</span><span class="unit">mS/cm</span></h3>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Status: Awaiting connection</p>
+            </div>
+
+        </section>
+
+        <!-- Activity Log -->
+        <section class="activity-log">
+            <h3>System Logs</h3>
+            <ul class="log-list">
+                <li><span class="log-time" id="log-time-1">--:--:--</span> Dashboard initialized. Waiting for sensor handshake.</li>
+                <li><span class="log-time" id="log-time-2">--:--:--</span> </li>
+                <li><span class="log-time" id="log-time-3">--:--:--</span> </li>
+            </ul>
+        </section>
+
     </main>
 
-    <footer>
-        <p>&copy; 2026 School Hydroponics Initiative. Built with 🌱 by students.</p>
-    </footer>
+    <!-- JAVASCRIPT FOR REAL SENSOR INTEGRATION -->
+    <script>
+        /**
+         * FIREBASE / SENSOR READY SETUP
+         * * This function is built to accept real data from your hardware.
+         * Whenever your Firebase database updates, just call this function
+         * and pass the new numbers to it!
+         */
+        function updateDashboard(temp, ph, humidity, ec) {
+            // .toFixed(1) ensures it always shows one decimal place (e.g. 21.0)
+            document.getElementById('gh1-temp').innerText = Number(temp).toFixed(1);
+            document.getElementById('gh1-ph').innerText = Number(ph).toFixed(1);
+            
+            // Math.round ensures humidity is a whole number (no decimals for %)
+            document.getElementById('mush-hum').innerText = Math.round(humidity);
+            
+            document.getElementById('res-ec').innerText = Number(ec).toFixed(1);
+        }
 
+        // Initialize dashboard with 0s immediately on load
+        updateDashboard(0, 0, 0, 0);
+
+        /* =========================================================
+        NEXT STEPS: HOW TO CONNECT FIREBASE LATER
+        =========================================================
+        When you set up Firebase and your sensors are pushing data to it, 
+        your JavaScript will look something like this:
+        
+        // 1. Listen to a specific document in your database for live changes
+        onSnapshot(doc(db, "hydroponics", "live_sensors"), (doc) => {
+            
+            // 2. Grab the live data from Firebase
+            const sensorData = doc.data();
+            
+            // 3. Pass the live data directly into our update function!
+            updateDashboard(
+                sensorData.temperature, 
+                sensorData.ph_level, 
+                sensorData.humidity, 
+                sensorData.ec_level
+            );
+            
+            // Optional: Change the top banner to say "Connected" and turn green
+        });
+        =========================================================
+        */
+
+        // Set the top log time to the current time on load to show it's active
+        const now = new Date();
+        document.getElementById('log-time-1').innerText = now.toLocaleTimeString('en-US', { hour12: false });
+    </script>
 </body>
 </html>
