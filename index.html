@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hydroponics Dashboard | TRA Agriculture</title>
+    <title>Greenhouses | TRA Agriculture</title>
     <style>
         /* Light Theme (Default) - Fresh & Earthy */
         :root {
-            --bg-color: #e5efe9; /* Deeper earthy mint so white panels pop */
+            --bg-color: #e5efe9;
             --panel-bg: #ffffff;
-            --text-main: #1f2937; /* Dark slate text */
-            --text-muted: #4b5563; /* Darkened for better contrast */
-            --accent-green: #059669; /* Rich emerald */
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --accent-green: #059669;
             --accent-blue: #2563eb;
             --warning-orange: #d97706;
             --danger-red: #dc2626;
             --nav-bg: #ffffff;
-            --nav-border: #a7f3d0; /* More visible border */
-            --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Stronger shadow for floating effect */
+            --nav-border: #a7f3d0;
+            --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             --card-float-offset: -10px;
         }
 
         /* Dark Theme - Soothing Deep Forest Greens */
         [data-theme="dark"] {
-            --bg-color: #141c18; /* Very deep, warm forest green */
-            --panel-bg: #1f2d25; /* Soft dark green-gray for cards */
+            --bg-color: #141c18;
+            --panel-bg: #1f2d25;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent-green: #10b981; 
@@ -33,7 +33,7 @@
             --danger-red: #ef4444;
             --nav-bg: #0d1411;
             --nav-border: #1f2d25;
-            --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for floating effect */
+            --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             --card-float-offset: -10px;
         }
 
@@ -58,6 +58,10 @@
             position: relative;
         }
 
+        a.logo {
+            text-decoration: none;
+        }
+
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
@@ -67,7 +71,6 @@
             gap: 10px;
         }
 
-        /* Hamburger Icon */
         .hamburger {
             display: none;
             font-size: 1.8rem;
@@ -93,7 +96,6 @@
             color: var(--accent-green);
         }
 
-        /* Theme Toggle Button */
         .theme-btn {
             background: transparent;
             border: 2px solid var(--accent-green);
@@ -114,95 +116,58 @@
             color: #ffffff;
         }
 
-        /* Main Dashboard Container */
-        .dashboard {
+        /* Main Container */
+        .page-container {
             padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* System Status Banner */
-        .status-banner {
+        /* Banner */
+        .page-banner {
             background-color: var(--panel-bg);
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             box-shadow: var(--card-shadow);
             transition: background-color 0.3s ease;
+            border-left: 8px solid var(--accent-green);
         }
 
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .pulse-dot {
-            width: 15px;
-            height: 15px;
-            background-color: var(--accent-green);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-green);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        /* Vertical Facility Layout */
-        .facility-container {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .facility-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .facility-section {
-                flex-direction: row;
-                align-items: center;
-            }
-            .facility-info {
-                flex: 1;
-                padding-right: 2rem;
-            }
-            .facility-data {
-                flex: 1.5;
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 1.5rem;
-            }
-        }
-
-        .facility-info h3 {
+        .page-banner h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
             color: var(--accent-green);
-            margin-top: 0;
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
         }
 
-        .facility-info p {
-            color: var(--text-muted);
-            line-height: 1.6;
+        .page-banner p {
             margin: 0;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            line-height: 1.6;
         }
 
-        /* Floating Sensor Cards */
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--nav-border);
+            padding-bottom: 10px;
+            margin-bottom: 2rem;
+        }
+
+        /* Grid Layouts */
+        .system-grid, .crop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Floating Cards */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(var(--card-float-offset)); }
@@ -213,96 +178,62 @@
             background-color: var(--panel-bg);
             padding: 1.5rem;
             border-radius: 16px;
-            border-top: 4px solid var(--accent-blue);
             box-shadow: var(--card-shadow);
             transition: background-color 0.3s ease;
             animation: float 6s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Stagger the floating animation so they don't bob exactly at the same time */
         .card:nth-child(even) { animation-delay: 1.5s; }
-        .card:nth-child(odd) { animation-delay: 0s; }
+        .card:nth-child(3n) { animation-delay: 0.8s; }
+        .card:hover { animation-play-state: paused; }
 
-        .card:hover {
-            animation-play-state: paused;
-        }
-
-        .card.greenhouse { border-top-color: var(--accent-green); }
-        .card.mushroom { border-top-color: var(--warning-orange); }
-
-        .card-header {
+        .card-image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            justify-content: center;
             color: var(--text-muted);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 3rem;
         }
 
-        .data-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 0;
-            display: flex;
-            align-items:baseline;
-            gap: 5px;
-        }
-
-        .unit {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            font-weight: normal;
-        }
-
-        /* Activity Log */
-        .activity-log {
-            background-color: var(--panel-bg);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            transition: background-color 0.3s ease;
-        }
-
-        .activity-log h3 {
-            margin-top: 0;
+        .card h3 {
             color: var(--accent-green);
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
         }
 
-        .log-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .log-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--bg-color);
+        .card p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+            flex-grow: 1;
         }
 
-        .log-list li:last-child {
-            border-bottom: none;
-        }
-
-        .log-time {
-            color: var(--accent-blue);
-            font-family: monospace;
-            margin-right: 10px;
+        /* Tech Badges */
+        .tech-badge {
+            display: inline-block;
+            background-color: var(--nav-border);
+            color: var(--accent-green);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 15px;
+            align-self: flex-start;
         }
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            nav {
-                flex-wrap: wrap;
-            }
-            .hamburger {
-                display: block; /* Show hamburger on mobile */
-            }
+            nav { flex-wrap: wrap; }
+            .hamburger { display: block; }
             .nav-links {
-                display: none; /* Hide links by default on mobile */
+                display: none;
                 flex-direction: column;
                 width: 100%;
                 text-align: center;
@@ -310,130 +241,95 @@
                 padding-top: 15px;
                 padding-bottom: 10px;
             }
-            .nav-links.active {
-                display: flex; /* Show links when hamburger is clicked */
-            }
+            .nav-links.active { display: flex; }
             .nav-links a, .theme-btn {
                 margin-left: 0;
                 width: 100%;
                 justify-content: center;
             }
-            .status-banner { flex-direction: column; gap: 15px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">🌱 TRA Agri-Tech</div>
+        <a href="index.html" class="logo">🌱 TRA Agri-Tech</a>
         
-        <!-- Hamburger Menu Icon -->
         <div class="hamburger" id="hamburger-menu">☰</div>
 
-        <!-- Navigation Links & Theme Toggle -->
         <div class="nav-links" id="nav-links">
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Greenhouses</a>
+            <a href="index.html">Dashboard</a>
+            <a href="#" class="active">Greenhouses</a>
             <a href="#">Mushroom Hut</a>
             <a href="#">Our Team</a>
             <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
         </div>
     </nav>
 
-    <main class="dashboard">
+    <main class="page-container">
         
-        <!-- System Status -->
-        <section class="status-banner">
-            <div>
-                <h2 style="margin: 0; font-size: 1.8rem;">Live Operations</h2>
-                <p style="margin: 5px 0 0 0; color: var(--text-muted);">Real-time monitoring from the TRA campus</p>
-            </div>
-            <div class="status-indicator">
-                <div class="pulse-dot" style="background-color: var(--warning-orange); box-shadow: 0 0 10px var(--warning-orange);"></div>
-                Waiting for Sensor Data...
+        <!-- Hero Banner -->
+        <header class="page-banner">
+            <h1>The North Wing Greenhouses</h1>
+            <p>Welcome to the core of our agricultural technology program. Our twin greenhouses are climate-controlled, soil-free environments designed to maximize yield, minimize water usage, and serve as a living laboratory for TRA students.</p>
+        </header>
+
+        <!-- Our Systems Section -->
+        <section class="content-section">
+            <h2>Our Hydroponic Systems</h2>
+            <div class="system-grid">
+                
+                <!-- DWC Card -->
+                <div class="card">
+                    <div class="card-image-placeholder">🌊</div>
+                    <h3>Deep Water Culture (DWC)</h3>
+                    <p>In our DWC beds, plant roots are suspended directly in highly oxygenated, nutrient-rich water. This system is incredibly fast-growing and water-efficient, making it perfect for our leafy greens.</p>
+                    <span class="tech-badge">Sensor Monitored</span>
+                </div>
+
+                <!-- NFT Card -->
+                <div class="card">
+                    <div class="card-image-placeholder">🚰</div>
+                    <h3>Nutrient Film Technique (NFT)</h3>
+                    <p>NFT uses shallow PVC channels to flow a very thin "film" of water constantly past the plant roots. This ensures the plants get exactly the nutrients they need while exposing the upper roots to abundant oxygen.</p>
+                    <span class="tech-badge">Automated Flow</span>
+                </div>
+
+                <!-- Dutch Bucket Card -->
+                <div class="card">
+                    <div class="card-image-placeholder">🍅</div>
+                    <h3>Dutch Bucket System</h3>
+                    <p>For large, vining plants like tomatoes and cucumbers, we use heavy-duty buckets filled with a lightweight medium (like clay pebbles). A drip emitter feeds each plant individually.</p>
+                    <span class="tech-badge">Drip Irrigation</span>
+                </div>
+
             </div>
         </section>
 
-        <!-- Vertical Facility Sections with Floating Data Cards -->
-        <section class="facility-container">
-            
-            <!-- Greenhouse 1 Section -->
-            <div class="facility-section">
-                <div class="facility-info">
-                    <h3>🥬 Greenhouse 1: North Wing</h3>
-                    <p>Live data streaming from the Deep Water Culture (DWC) beds. These sensors monitor the root-zone environment for our primary leafy greens, ensuring optimal nutrient uptake and preventing root rot.</p>
+        <!-- Current Crops Section -->
+        <section class="content-section">
+            <h2>Currently Cultivating</h2>
+            <div class="crop-grid">
+                
+                <div class="card">
+                    <div class="card-image-placeholder">🥬</div>
+                    <h3>Butterhead Lettuce</h3>
+                    <p>Our staple crop. Grown in the DWC beds, this lettuce goes from seedling to full harvest in just under 35 days. It thrives in our targeted 22°C water temperature.</p>
                 </div>
-                <div class="facility-data">
-                    <!-- Greenhouse 1: Temperature -->
-                    <div class="card greenhouse">
-                        <div class="card-header">
-                            <span>Water Temp</span>
-                            <span>🌡️</span>
-                        </div>
-                        <h3 class="data-value"><span id="gh1-temp">0.0</span><span class="unit">°C</span></h3>
-                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Target: 22.0°C</p>
-                    </div>
 
-                    <!-- Greenhouse 1: pH Level -->
-                    <div class="card greenhouse">
-                        <div class="card-header">
-                            <span>pH Level</span>
-                            <span>💧</span>
-                        </div>
-                        <h3 class="data-value"><span id="gh1-ph">0.0</span><span class="unit">pH</span></h3>
-                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Optimal range: 5.5 - 6.5</p>
-                    </div>
+                <div class="card">
+                    <div class="card-image-placeholder">🌿</div>
+                    <h3>Genovese Basil</h3>
+                    <p>Housed in our NFT channels, our basil provides a highly aromatic yield. Hydroponic basil grows exceptionally fast because it never has to fight soil resistance.</p>
                 </div>
+
+                <div class="card">
+                    <div class="card-image-placeholder">🍓</div>
+                    <h3>Alpine Strawberries</h3>
+                    <p>An experimental crop for the club this semester! We are carefully tweaking the Potassium and Phosphorus (EC) levels in the reservoir to encourage sweet, continuous fruiting.</p>
+                </div>
+
             </div>
-
-            <!-- Mushroom Hut Section -->
-            <div class="facility-section">
-                <div class="facility-info">
-                    <h3>🍄 Mushroom Hut: Basement</h3>
-                    <p>Data direct from the incubation chamber. Fungi require extreme humidity precision to fruit properly. These sensors trigger the automated misting pumps when the air becomes too dry.</p>
-                </div>
-                <div class="facility-data">
-                    <!-- Mushroom Hut: Humidity -->
-                    <div class="card mushroom">
-                        <div class="card-header">
-                            <span>Air Humidity</span>
-                            <span>🌫️</span>
-                        </div>
-                        <h3 class="data-value"><span id="mush-hum">0</span><span class="unit">%</span></h3>
-                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Misting pump: STANDBY</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Central Reservoir Section -->
-            <div class="facility-section">
-                <div class="facility-info">
-                    <h3>🧪 Main Reservoir: Pump Station</h3>
-                    <p>Sensors submerged in the central 500-gallon tank. This monitors the overall Electrical Conductivity (EC) of the nutrient solution before it gets pumped to the individual greenhouses.</p>
-                </div>
-                <div class="facility-data">
-                    <!-- Main Reservoir: Nutrient Level -->
-                    <div class="card">
-                        <div class="card-header">
-                            <span>Nutrient (EC)</span>
-                            <span>🧪</span>
-                        </div>
-                        <h3 class="data-value"><span id="res-ec">0.0</span><span class="unit">mS/cm</span></h3>
-                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Status: Awaiting connection</p>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- Activity Log -->
-        <section class="activity-log">
-            <h3>System Logs</h3>
-            <ul class="log-list">
-                <li><span class="log-time" id="log-time-1">--:--:--</span> Dashboard initialized. Waiting for sensor handshake.</li>
-                <li><span class="log-time" id="log-time-2">--:--:--</span> </li>
-                <li><span class="log-time" id="log-time-3">--:--:--</span> </li>
-            </ul>
         </section>
 
     </main>
@@ -441,25 +337,23 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         // ==========================================
-        // UI & THEME TOGGLE LOGIC
+        // UI & THEME TOGGLE LOGIC (Matches Dashboard)
         // ==========================================
         const themeToggleBtn = document.getElementById('theme-toggle');
         const hamburgerMenu = document.getElementById('hamburger-menu');
         const navLinks = document.getElementById('nav-links');
         
-        // 1. Mobile Hamburger Menu Toggle
+        // Mobile Hamburger Menu Toggle
         hamburgerMenu.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
 
-        // 2. Light/Dark Theme Logic
-        // Check local storage to see if the user previously chose dark mode
+        // Light/Dark Theme Logic
         if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             themeToggleBtn.innerHTML = '☀️ Light Mode';
         }
 
-        // Toggle theme when button is clicked
         themeToggleBtn.addEventListener('click', () => {
             if (document.body.getAttribute('data-theme') === 'dark') {
                 document.body.removeAttribute('data-theme');
@@ -471,23 +365,6 @@
                 localStorage.setItem('theme', 'dark');
             }
         });
-
-        // ==========================================
-        // FIREBASE / SENSOR READY SETUP
-        // ==========================================
-        function updateDashboard(temp, ph, humidity, ec) {
-            document.getElementById('gh1-temp').innerText = Number(temp).toFixed(1);
-            document.getElementById('gh1-ph').innerText = Number(ph).toFixed(1);
-            document.getElementById('mush-hum').innerText = Math.round(humidity);
-            document.getElementById('res-ec').innerText = Number(ec).toFixed(1);
-        }
-
-        // Initialize dashboard with 0s immediately on load
-        updateDashboard(0, 0, 0, 0);
-
-        // Set the top log time to the current time on load
-        const now = new Date();
-        document.getElementById('log-time-1').innerText = now.toLocaleTimeString('en-US', { hour12: false });
     </script>
 </body>
 </html>
