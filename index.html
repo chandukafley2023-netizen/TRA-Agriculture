@@ -5,16 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hydroponics Dashboard | TRA Agriculture</title>
     <style>
-        /* Modern, Dark Tech-Dashboard Styling */
+        /* Light Theme (Default) - Fresh & Earthy */
         :root {
-            --bg-color: #0f172a; /* Dark slate blue */
-            --panel-bg: #1e293b;
+            --bg-color: #f4fcf6; /* Very soft mint/white */
+            --panel-bg: #ffffff;
+            --text-main: #1f2937; /* Dark slate text */
+            --text-muted: #6b7280;
+            --accent-green: #059669; /* Rich emerald */
+            --accent-blue: #2563eb;
+            --warning-orange: #d97706;
+            --danger-red: #dc2626;
+            --nav-bg: #ffffff;
+            --nav-border: #d1fae5;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Dark Theme - Soothing Deep Forest Greens */
+        [data-theme="dark"] {
+            --bg-color: #141c18; /* Very deep, warm forest green */
+            --panel-bg: #1f2d25; /* Soft dark green-gray for cards */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --accent-green: #10b981; /* Emerald green */
+            --accent-green: #10b981; 
             --accent-blue: #3b82f6;
             --warning-orange: #f59e0b;
             --danger-red: #ef4444;
+            --nav-bg: #0d1411;
+            --nav-border: #1f2d25;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
         }
 
         body {
@@ -23,16 +41,19 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* Navigation */
         nav {
-            background-color: #020617;
+            background-color: var(--nav-bg);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--accent-green);
+            border-bottom: 2px solid var(--nav-border);
+            transition: background-color 0.3s ease;
+            position: relative;
         }
 
         .logo {
@@ -42,6 +63,20 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        /* Hamburger Icon */
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
         }
 
         .nav-links a {
@@ -54,6 +89,27 @@
 
         .nav-links a:hover, .nav-links a.active {
             color: var(--accent-green);
+        }
+
+        /* Theme Toggle Button */
+        .theme-btn {
+            background: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--text-main);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            background: var(--accent-green);
+            color: #ffffff;
         }
 
         /* Main Dashboard Container */
@@ -72,7 +128,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.3s ease;
         }
 
         .status-indicator {
@@ -112,8 +169,8 @@
             padding: 1.5rem;
             border-radius: 12px;
             border-top: 4px solid var(--accent-blue);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s ease, background-color 0.3s ease;
         }
 
         .card:hover {
@@ -154,6 +211,8 @@
             background-color: var(--panel-bg);
             padding: 1.5rem;
             border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.3s ease;
         }
 
         .activity-log h3 {
@@ -169,7 +228,7 @@
 
         .log-list li {
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid var(--bg-color);
             color: var(--text-muted);
             font-size: 0.95rem;
         }
@@ -186,7 +245,29 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            nav { flex-direction: column; gap: 15px; }
+            nav {
+                flex-wrap: wrap;
+            }
+            .hamburger {
+                display: block; /* Show hamburger on mobile */
+            }
+            .nav-links {
+                display: none; /* Hide links by default on mobile */
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 15px;
+                padding-top: 15px;
+                padding-bottom: 10px;
+            }
+            .nav-links.active {
+                display: flex; /* Show links when hamburger is clicked */
+            }
+            .nav-links a, .theme-btn {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
             .status-banner { flex-direction: column; gap: 15px; text-align: center; }
         }
     </style>
@@ -194,12 +275,18 @@
 <body>
 
     <nav>
-        <div class="logo">🌱 TRA Agri-Tech Hub</div>
-        <div class="nav-links">
+        <div class="logo">🌱 TRA Agri-Tech</div>
+        
+        <!-- Hamburger Menu Icon -->
+        <div class="hamburger" id="hamburger-menu">☰</div>
+
+        <!-- Navigation Links & Theme Toggle -->
+        <div class="nav-links" id="nav-links">
             <a href="#" class="active">Dashboard</a>
             <a href="#">Greenhouses</a>
             <a href="#">Mushroom Hut</a>
             <a href="#">Our Team</a>
+            <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
         </div>
     </nav>
 
@@ -274,54 +361,54 @@
 
     </main>
 
-    <!-- JAVASCRIPT FOR REAL SENSOR INTEGRATION -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        /**
-         * FIREBASE / SENSOR READY SETUP
-         * * This function is built to accept real data from your hardware.
-         * Whenever your Firebase database updates, just call this function
-         * and pass the new numbers to it!
-         */
+        // ==========================================
+        // UI & THEME TOGGLE LOGIC
+        // ==========================================
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const navLinks = document.getElementById('nav-links');
+        
+        // 1. Mobile Hamburger Menu Toggle
+        hamburgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // 2. Light/Dark Theme Logic
+        // Check local storage to see if the user previously chose dark mode
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggleBtn.innerHTML = '☀️ Light Mode';
+        }
+
+        // Toggle theme when button is clicked
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeToggleBtn.innerHTML = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggleBtn.innerHTML = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // ==========================================
+        // FIREBASE / SENSOR READY SETUP
+        // ==========================================
         function updateDashboard(temp, ph, humidity, ec) {
-            // .toFixed(1) ensures it always shows one decimal place (e.g. 21.0)
             document.getElementById('gh1-temp').innerText = Number(temp).toFixed(1);
             document.getElementById('gh1-ph').innerText = Number(ph).toFixed(1);
-            
-            // Math.round ensures humidity is a whole number (no decimals for %)
             document.getElementById('mush-hum').innerText = Math.round(humidity);
-            
             document.getElementById('res-ec').innerText = Number(ec).toFixed(1);
         }
 
         // Initialize dashboard with 0s immediately on load
         updateDashboard(0, 0, 0, 0);
 
-        /* =========================================================
-        NEXT STEPS: HOW TO CONNECT FIREBASE LATER
-        =========================================================
-        When you set up Firebase and your sensors are pushing data to it, 
-        your JavaScript will look something like this:
-        
-        // 1. Listen to a specific document in your database for live changes
-        onSnapshot(doc(db, "hydroponics", "live_sensors"), (doc) => {
-            
-            // 2. Grab the live data from Firebase
-            const sensorData = doc.data();
-            
-            // 3. Pass the live data directly into our update function!
-            updateDashboard(
-                sensorData.temperature, 
-                sensorData.ph_level, 
-                sensorData.humidity, 
-                sensorData.ec_level
-            );
-            
-            // Optional: Change the top banner to say "Connected" and turn green
-        });
-        =========================================================
-        */
-
-        // Set the top log time to the current time on load to show it's active
+        // Set the top log time to the current time on load
         const now = new Date();
         document.getElementById('log-time-1').innerText = now.toLocaleTimeString('en-US', { hour12: false });
     </script>
