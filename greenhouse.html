@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenhouses | TRA Agriculture</title>
+    <style>
+        /* Light Theme (Default) - Fresh & Earthy */
+        :root {
+            --bg-color: #e5efe9;
+            --panel-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --accent-green: #059669;
+            --accent-blue: #2563eb;
+            --warning-orange: #d97706;
+            --danger-red: #dc2626;
+            --nav-bg: #ffffff;
+            --nav-border: #a7f3d0;
+            --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            --card-float-offset: -10px;
+        }
+
+        /* Dark Theme - Soothing Deep Forest Greens */
+        [data-theme="dark"] {
+            --bg-color: #141c18;
+            --panel-bg: #1f2d25;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981; 
+            --accent-blue: #3b82f6;
+            --warning-orange: #f59e0b;
+            --danger-red: #ef4444;
+            --nav-bg: #0d1411;
+            --nav-border: #1f2d25;
+            --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            --card-float-offset: -10px;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--nav-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--nav-border);
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-green);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--text-main);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            background: var(--accent-green);
+            color: #ffffff;
+        }
+
+        /* Main Container */
+        .page-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Banner */
+        .page-banner {
+            background-color: var(--panel-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.3s ease;
+            border-left: 8px solid var(--accent-green);
+        }
+
+        .page-banner h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+            color: var(--accent-green);
+        }
+
+        .page-banner p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--nav-border);
+            padding-bottom: 10px;
+            margin-bottom: 2rem;
+        }
+
+        /* Grid Layouts */
+        .system-grid, .crop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Floating Cards */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(var(--card-float-offset)); }
+            100% { transform: translateY(0px); }
+        }
+
+        .card {
+            background-color: var(--panel-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:nth-child(even) { animation-delay: 1.5s; }
+        .card:nth-child(3n) { animation-delay: 0.8s; }
+        .card:hover { animation-play-state: paused; }
+
+        .card-image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 3rem;
+        }
+
+        .card h3 {
+            color: var(--accent-green);
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        /* Tech Badges */
+        .tech-badge {
+            display: inline-block;
+            background-color: var(--nav-border);
+            color: var(--accent-green);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 15px;
+            align-self: flex-start;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            nav { flex-wrap: wrap; }
+            .hamburger { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 15px;
+                padding-top: 15px;
+                padding-bottom: 10px;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a, .theme-btn {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">🌱 TRA Agri-Tech</div>
+        
+        <div class="hamburger" id="hamburger-menu">☰</div>
+
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="#" class="active">Greenhouses</a>
+            <a href="#">Mushroom Hut</a>
+            <a href="#">Our Team</a>
+            <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
+        </div>
+    </nav>
+
+    <main class="page-container">
+        
+        <!-- Hero Banner -->
+        <header class="page-banner">
+            <h1>The North Wing Greenhouses</h1>
+            <p>Welcome to the core of our agricultural technology program. Our twin greenhouses are climate-controlled, soil-free environments designed to maximize yield, minimize water usage, and serve as a living laboratory for TRA students.</p>
+        </header>
+
+        <!-- Our Systems Section -->
+        <section class="content-section">
+            <h2>Our Hydroponic Systems</h2>
+            <div class="system-grid">
+                
+                <!-- DWC Card -->
+                <div class="card">
+                    <div class="card-image-placeholder">🌊</div>
+                    <h3>Deep Water Culture (DWC)</h3>
+                    <p>In our DWC beds, plant roots are suspended directly in highly oxygenated, nutrient-rich water. This system is incredibly fast-growing and water-efficient, making it perfect for our leafy greens.</p>
+                    <span class="tech-badge">Sensor Monitored</span>
+                </div>
+
+                <!-- NFT Card -->
+                <div class="card">
+                    <div class="card-image-placeholder">🚰</div>
+                    <h3>Nutrient Film Technique (NFT)</h3>
+                    <p>NFT uses shallow PVC channels to flow a very thin "film" of water constantly past the plant roots. This ensures the plants get exactly the nutrients they need while exposing the upper roots to abundant oxygen.</p>
+                    <span class="tech-badge">Automated Flow</span>
+                </div>
+
+                <!-- Dutch Bucket Card -->
+                <div class="card">
+                    <div class="card-image-placeholder">🍅</div>
+                    <h3>Dutch Bucket System</h3>
+                    <p>For large, vining plants like tomatoes and cucumbers, we use heavy-duty buckets filled with a lightweight medium (like clay pebbles). A drip emitter feeds each plant individually.</p>
+                    <span class="tech-badge">Drip Irrigation</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Current Crops Section -->
+        <section class="content-section">
+            <h2>Currently Cultivating</h2>
+            <div class="crop-grid">
+                
+                <div class="card">
+                    <div class="card-image-placeholder">🥬</div>
+                    <h3>Butterhead Lettuce</h3>
+                    <p>Our staple crop. Grown in the DWC beds, this lettuce goes from seedling to full harvest in just under 35 days. It thrives in our targeted 22°C water temperature.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-image-placeholder">🌿</div>
+                    <h3>Genovese Basil</h3>
+                    <p>Housed in our NFT channels, our basil provides a highly aromatic yield. Hydroponic basil grows exceptionally fast because it never has to fight soil resistance.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-image-placeholder">🍓</div>
+                    <h3>Alpine Strawberries</h3>
+                    <p>An experimental crop for the club this semester! We are carefully tweaking the Potassium and Phosphorus (EC) levels in the reservoir to encourage sweet, continuous fruiting.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ==========================================
+        // UI & THEME TOGGLE LOGIC (Matches Dashboard)
+        // ==========================================
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const navLinks = document.getElementById('nav-links');
+        
+        // Mobile Hamburger Menu Toggle
+        hamburgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Light/Dark Theme Logic
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggleBtn.innerHTML = '☀️ Light Mode';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeToggleBtn.innerHTML = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggleBtn.innerHTML = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
