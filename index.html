@@ -7,17 +7,18 @@
     <style>
         /* Light Theme (Default) - Fresh & Earthy */
         :root {
-            --bg-color: #f4fcf6; /* Very soft mint/white */
+            --bg-color: #e5efe9; /* Deeper earthy mint so white panels pop */
             --panel-bg: #ffffff;
             --text-main: #1f2937; /* Dark slate text */
-            --text-muted: #6b7280;
+            --text-muted: #4b5563; /* Darkened for better contrast */
             --accent-green: #059669; /* Rich emerald */
             --accent-blue: #2563eb;
             --warning-orange: #d97706;
             --danger-red: #dc2626;
             --nav-bg: #ffffff;
-            --nav-border: #d1fae5;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --nav-border: #a7f3d0; /* More visible border */
+            --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Stronger shadow for floating effect */
+            --card-float-offset: -10px;
         }
 
         /* Dark Theme - Soothing Deep Forest Greens */
@@ -32,7 +33,8 @@
             --danger-red: #ef4444;
             --nav-bg: #0d1411;
             --nav-border: #1f2d25;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow for floating effect */
+            --card-float-offset: -10px;
         }
 
         body {
@@ -155,26 +157,74 @@
             100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
-        /* Sensor Grid Layout */
-        .sensor-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+        /* Vertical Facility Layout */
+        .facility-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
 
-        /* Sensor Cards */
+        .facility-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .facility-section {
+                flex-direction: row;
+                align-items: center;
+            }
+            .facility-info {
+                flex: 1;
+                padding-right: 2rem;
+            }
+            .facility-data {
+                flex: 1.5;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        .facility-info h3 {
+            color: var(--accent-green);
+            margin-top: 0;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .facility-info p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Floating Sensor Cards */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(var(--card-float-offset)); }
+            100% { transform: translateY(0px); }
+        }
+
         .card {
             background-color: var(--panel-bg);
             padding: 1.5rem;
-            border-radius: 12px;
+            border-radius: 16px;
             border-top: 4px solid var(--accent-blue);
             box-shadow: var(--card-shadow);
-            transition: transform 0.2s ease, background-color 0.3s ease;
+            transition: background-color 0.3s ease;
+            animation: float 6s ease-in-out infinite;
         }
 
+        /* Stagger the floating animation so they don't bob exactly at the same time */
+        .card:nth-child(even) { animation-delay: 1.5s; }
+        .card:nth-child(odd) { animation-delay: 0s; }
+
         .card:hover {
-            transform: translateY(-3px);
+            animation-play-state: paused;
         }
 
         .card.greenhouse { border-top-color: var(--accent-green); }
@@ -304,47 +354,74 @@
             </div>
         </section>
 
-        <!-- Sensor Data Grid -->
-        <section class="sensor-grid">
+        <!-- Vertical Facility Sections with Floating Data Cards -->
+        <section class="facility-container">
             
-            <!-- Greenhouse 1: Temperature -->
-            <div class="card greenhouse">
-                <div class="card-header">
-                    <span>GH-1 Water Temp</span>
-                    <span>🌡️</span>
+            <!-- Greenhouse 1 Section -->
+            <div class="facility-section">
+                <div class="facility-info">
+                    <h3>🥬 Greenhouse 1: North Wing</h3>
+                    <p>Live data streaming from the Deep Water Culture (DWC) beds. These sensors monitor the root-zone environment for our primary leafy greens, ensuring optimal nutrient uptake and preventing root rot.</p>
                 </div>
-                <h3 class="data-value"><span id="gh1-temp">0.0</span><span class="unit">°C</span></h3>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Target: 22.0°C</p>
+                <div class="facility-data">
+                    <!-- Greenhouse 1: Temperature -->
+                    <div class="card greenhouse">
+                        <div class="card-header">
+                            <span>Water Temp</span>
+                            <span>🌡️</span>
+                        </div>
+                        <h3 class="data-value"><span id="gh1-temp">0.0</span><span class="unit">°C</span></h3>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Target: 22.0°C</p>
+                    </div>
+
+                    <!-- Greenhouse 1: pH Level -->
+                    <div class="card greenhouse">
+                        <div class="card-header">
+                            <span>pH Level</span>
+                            <span>💧</span>
+                        </div>
+                        <h3 class="data-value"><span id="gh1-ph">0.0</span><span class="unit">pH</span></h3>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Optimal range: 5.5 - 6.5</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Greenhouse 1: pH Level -->
-            <div class="card greenhouse">
-                <div class="card-header">
-                    <span>GH-1 pH Level</span>
-                    <span>💧</span>
+            <!-- Mushroom Hut Section -->
+            <div class="facility-section">
+                <div class="facility-info">
+                    <h3>🍄 Mushroom Hut: Basement</h3>
+                    <p>Data direct from the incubation chamber. Fungi require extreme humidity precision to fruit properly. These sensors trigger the automated misting pumps when the air becomes too dry.</p>
                 </div>
-                <h3 class="data-value"><span id="gh1-ph">0.0</span><span class="unit">pH</span></h3>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Optimal range: 5.5 - 6.5</p>
+                <div class="facility-data">
+                    <!-- Mushroom Hut: Humidity -->
+                    <div class="card mushroom">
+                        <div class="card-header">
+                            <span>Air Humidity</span>
+                            <span>🌫️</span>
+                        </div>
+                        <h3 class="data-value"><span id="mush-hum">0</span><span class="unit">%</span></h3>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Misting pump: STANDBY</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Mushroom Hut: Humidity -->
-            <div class="card mushroom">
-                <div class="card-header">
-                    <span>Mushroom Hut Humidity</span>
-                    <span>🌫️</span>
+            <!-- Central Reservoir Section -->
+            <div class="facility-section">
+                <div class="facility-info">
+                    <h3>🧪 Main Reservoir: Pump Station</h3>
+                    <p>Sensors submerged in the central 500-gallon tank. This monitors the overall Electrical Conductivity (EC) of the nutrient solution before it gets pumped to the individual greenhouses.</p>
                 </div>
-                <h3 class="data-value"><span id="mush-hum">0</span><span class="unit">%</span></h3>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Misting pump: STANDBY</p>
-            </div>
-
-            <!-- Main Reservoir: Nutrient Level -->
-            <div class="card">
-                <div class="card-header">
-                    <span>Reservoir Nutrient (EC)</span>
-                    <span>🧪</span>
+                <div class="facility-data">
+                    <!-- Main Reservoir: Nutrient Level -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Nutrient (EC)</span>
+                            <span>🧪</span>
+                        </div>
+                        <h3 class="data-value"><span id="res-ec">0.0</span><span class="unit">mS/cm</span></h3>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Status: Awaiting connection</p>
+                    </div>
                 </div>
-                <h3 class="data-value"><span id="res-ec">0.0</span><span class="unit">mS/cm</span></h3>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">Status: Awaiting connection</p>
             </div>
 
         </section>
