@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mushroom Hut | TRA Agriculture</title>
+    <style>
+        /* Light Theme (Default) - Fresh & Earthy */
+        :root {
+            --bg-color: #e5efe9;
+            --panel-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --accent-green: #059669;
+            --accent-blue: #2563eb;
+            --warning-orange: #d97706;
+            --danger-red: #dc2626;
+            --nav-bg: #ffffff;
+            --nav-border: #a7f3d0;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --card-float-offset: -5px;
+        }
+
+        /* Dark Theme - Soothing Deep Forest Greens */
+        [data-theme="dark"] {
+            --bg-color: #141c18;
+            --panel-bg: #1f2d25;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981; 
+            --accent-blue: #3b82f6;
+            --warning-orange: #f59e0b;
+            --danger-red: #ef4444;
+            --nav-bg: #0d1411;
+            --nav-border: #1f2d25;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --card-float-offset: -5px;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--nav-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--nav-border);
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+
+        a.logo {
+            text-decoration: none;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Hamburger Icon */
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--warning-orange); /* Highlighted orange for the mushroom page */
+        }
+
+        /* Theme Toggle Button */
+        .theme-btn {
+            background: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--text-main);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            background: var(--accent-green);
+            color: #ffffff;
+        }
+
+        /* Main Page Layout */
+        .page-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Banner */
+        .page-banner {
+            background-color: var(--panel-bg);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: var(--card-shadow);
+            border-left: 8px solid var(--warning-orange);
+            transition: background-color 0.3s ease;
+        }
+
+        .page-banner h1 {
+            margin: 0 0 15px 0;
+            font-size: 2.8rem;
+            color: var(--warning-orange);
+        }
+
+        .page-banner p {
+            margin: 0;
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            line-height: 1.7;
+        }
+
+        /* Content Grids */
+        .section-title {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--nav-border);
+            padding-bottom: 10px;
+            margin-bottom: 2rem;
+            color: var(--text-main);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Info Cards */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(var(--card-float-offset)); }
+            100% { transform: translateY(0px); }
+        }
+
+        .card {
+            background-color: var(--panel-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid var(--warning-orange);
+        }
+
+        .card:nth-child(even) { animation-delay: 1.5s; }
+        .card:nth-child(3n) { animation-delay: 0.8s; }
+        .card:hover { animation-play-state: paused; }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .card h3 {
+            color: var(--warning-orange);
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        /* Badge tags */
+        .badge {
+            display: inline-block;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 15px;
+            align-self: center;
+            border: 1px solid var(--nav-border);
+        }
+
+        /* Placeholder / Blur effect */
+        .placeholder-card {
+            position: relative;
+        }
+        
+        .blurred-content {
+            filter: blur(6px);
+            opacity: 0.4;
+            user-select: none;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .coming-soon-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--panel-bg);
+            border: 2px dashed var(--warning-orange);
+            color: var(--warning-orange);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 2;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+            }
+            .hamburger {
+                display: block; 
+            }
+            .nav-links {
+                display: none; 
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 15px;
+                padding-top: 15px;
+                padding-bottom: 10px;
+            }
+            .nav-links.active {
+                display: flex; 
+            }
+            .nav-links a, .theme-btn {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">🌱 TRA Agri-Tech</a>
+        
+        <!-- Hamburger Menu Icon -->
+        <div class="hamburger" id="hamburger-menu">☰</div>
+
+        <!-- Navigation Links & Theme Toggle -->
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="greenhouse.html">Greenhouses</a>
+            <a href="mushroom.html" class="active">Mushroom Hut</a>
+            <a href="ourteam.html">Our Team</a>
+            <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
+        </div>
+    </nav>
+
+    <main class="page-container">
+        
+        <!-- Hero Banner -->
+        <header class="page-banner">
+            <h1>🍄 The Fungal Lab</h1>
+            <p>Welcome to our dedicated Mycology department. Unlike our hydroponic greenhouses that rely on intense light and nutrient-rich water, the Mushroom Hut focuses on the science of decomposition, extreme humidity control, and precise CO2 management.</p>
+        </header>
+
+        <!-- What We Grow Section -->
+        <h2 class="section-title">Currently Cultivating</h2>
+        <section class="grid-container">
+            
+            <div class="card">
+                <div class="card-icon">🦪</div>
+                <h3>Blue Oyster Mushrooms</h3>
+                <p>One of our fastest-growing strains. Oyster mushrooms are incredibly aggressive colonizers. We grow these on sterilized straw and hardwood sawdust blocks. They are perfect for teaching students the rapid lifecycle of mycelium.</p>
+                <span class="badge">Harvest Time: 3 Weeks</span>
+            </div>
+
+            <div class="card placeholder-card">
+                <div class="blurred-content">
+                    <div class="card-icon">❓</div>
+                    <h3>Unknown Strain</h3>
+                    <p>This incubator space is currently being prepped for our next fungal experiment. Temperature and humidity are being calibrated.</p>
+                    <span class="badge">TBD</span>
+                </div>
+                <div class="coming-soon-overlay">
+                    Incubating...<br>
+                    <span style="font-size: 0.85rem; color: var(--text-main); font-weight: normal;">Strain TBD</span>
+                </div>
+            </div>
+
+            <div class="card placeholder-card">
+                <div class="blurred-content">
+                    <div class="card-icon">❓</div>
+                    <h3>Unknown Strain</h3>
+                    <p>This incubator space is currently being prepped for our next fungal experiment. Temperature and humidity are being calibrated.</p>
+                    <span class="badge">TBD</span>
+                </div>
+                <div class="coming-soon-overlay">
+                    Incubating...<br>
+                    <span style="font-size: 0.85rem; color: var(--text-main); font-weight: normal;">Space Available</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Technology Section -->
+        <h2 class="section-title">Hut Technology & Sensors</h2>
+        <section class="grid-container">
+            
+            <div class="card">
+                <div class="card-icon">🌫️</div>
+                <h3>Ultrasonic Foggers</h3>
+                <p>Mushrooms don't have skin to trap moisture, so they can dry out easily. We use industrial ultrasonic foggers tied directly to our live dashboard's humidity sensors to keep the air at a constant 85-95% relative humidity.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">💨</div>
+                <h3>CO2 Exhaust System</h3>
+                <p>Unlike plants, fungi inhale oxygen and exhale carbon dioxide (CO2). If CO2 levels get too high, the mushrooms grow long, stringy stems. Our automated exhaust fans trigger whenever CO2 surpasses 1000 ppm.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ==========================================
+        // UI & THEME TOGGLE LOGIC
+        // ==========================================
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const navLinks = document.getElementById('nav-links');
+        
+        // 1. Mobile Hamburger Menu Toggle
+        hamburgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // 2. Light/Dark Theme Logic
+        // Check local storage to see if the user previously chose dark mode
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggleBtn.innerHTML = '☀️ Light Mode';
+        }
+
+        // Toggle theme when button is clicked
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeToggleBtn.innerHTML = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggleBtn.innerHTML = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
