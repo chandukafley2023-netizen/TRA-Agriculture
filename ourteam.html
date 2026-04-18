@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team | TRA Agriculture</title>
+    <style>
+        /* Light Theme (Default) - Fresh & Earthy */
+        :root {
+            --bg-color: #e5efe9;
+            --panel-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --accent-green: #059669;
+            --accent-blue: #2563eb;
+            --warning-orange: #d97706;
+            --danger-red: #dc2626;
+            --nav-bg: #ffffff;
+            --nav-border: #a7f3d0;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --card-float-offset: -8px;
+        }
+
+        /* Dark Theme - Soothing Deep Forest Greens */
+        [data-theme="dark"] {
+            --bg-color: #141c18;
+            --panel-bg: #1f2d25;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981; 
+            --accent-blue: #3b82f6;
+            --warning-orange: #f59e0b;
+            --danger-red: #ef4444;
+            --nav-bg: #0d1411;
+            --nav-border: #1f2d25;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --card-float-offset: -8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--nav-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--nav-border);
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+
+        a.logo {
+            text-decoration: none;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-blue); /* Blue accent for the team page */
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--text-main);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            background: var(--accent-green);
+            color: #ffffff;
+        }
+
+        /* Main Container */
+        .page-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Banner */
+        .page-banner {
+            background-color: var(--panel-bg);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.3s ease;
+            border-left: 8px solid var(--accent-blue);
+            text-align: center;
+        }
+
+        .page-banner h1 {
+            margin: 0 0 15px 0;
+            font-size: 2.8rem;
+            color: var(--accent-blue);
+        }
+
+        .page-banner p {
+            margin: 0 auto;
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            line-height: 1.7;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--nav-border);
+            padding-bottom: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Grid Layouts */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Floating Cards */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(var(--card-float-offset)); }
+            100% { transform: translateY(0px); }
+        }
+
+        .card {
+            background-color: var(--panel-bg);
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: background-color 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-top: 4px solid var(--accent-blue);
+        }
+
+        .card:nth-child(even) { animation-delay: 1.5s; }
+        .card:nth-child(3n) { animation-delay: 0.8s; }
+        .card:hover { animation-play-state: paused; }
+
+        /* Profile Picture Placeholder */
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            background-color: var(--bg-color);
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 4px solid var(--nav-border);
+            color: var(--text-muted);
+        }
+
+        .card h3 {
+            color: var(--text-main);
+            margin: 0 0 5px 0;
+            font-size: 1.4rem;
+        }
+
+        .role-badge {
+            display: inline-block;
+            background-color: var(--accent-blue);
+            color: #ffffff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Join Us Section */
+        .join-us {
+            background-color: var(--panel-bg);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .join-us h2 {
+            color: var(--accent-green);
+            margin-top: 0;
+        }
+
+        .join-us p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 1.5rem auto;
+            line-height: 1.6;
+        }
+
+        .contact-btn {
+            background-color: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .contact-btn:hover {
+            background-color: #047857;
+            transform: scale(1.05);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            nav { flex-wrap: wrap; }
+            .hamburger { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 15px;
+                padding-top: 15px;
+                padding-bottom: 10px;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a, .theme-btn {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">🌱 TRA Agri-Tech</a>
+        
+        <div class="hamburger" id="hamburger-menu">☰</div>
+
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="greenhouse.html">Greenhouses</a>
+            <a href="mushroom.html">Mushroom Hut</a>
+            <a href="ourteam.html" class="active">Our Team</a>
+            <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
+        </div>
+    </nav>
+
+    <main class="page-container">
+        
+        <!-- Hero Banner -->
+        <header class="page-banner">
+            <h1>Meet the Innovators</h1>
+            <p>We are a dedicated group of students at TRA combining computer science, botany, and engineering to build sustainable agricultural systems for our school campus.</p>
+        </header>
+
+        <!-- Team Roster Section -->
+        <section class="content-section">
+            <h2 class="section-title">The Core Team</h2>
+            <div class="team-grid">
+                
+                <!-- Automation Sector -->
+                <div class="card">
+                    <div class="profile-pic">⚙️</div>
+                    <h3>Automation Team</h3>
+                    <span class="role-badge">Code & Sensors</span>
+                    <p>Handles the real-time dashboard, Firebase database integration, and the automated hardware systems that monitor our crops.</p>
+                </div>
+
+                <!-- Nutrition Sector -->
+                <div class="card">
+                    <div class="profile-pic">🧪</div>
+                    <h3>Nutrition Team</h3>
+                    <span class="role-badge">Plant Health</span>
+                    <p>Manages daily nutrient dosing, monitors pH and EC levels, and ensures our plants receive the exact chemical balance they need to thrive.</p>
+                </div>
+
+                <!-- Structure Sector -->
+                <div class="card">
+                    <div class="profile-pic">🏗️</div>
+                    <h3>Structure Team</h3>
+                    <span class="role-badge">Hardware & Build</span>
+                    <p>Designs and maintains the physical hydroponic systems, deep water culture beds, PVC piping, and the physical greenhouse frameworks.</p>
+                </div>
+
+                <!-- Documentation Sector -->
+                <div class="card">
+                    <div class="profile-pic">📝</div>
+                    <h3>Documentation Team</h3>
+                    <span class="role-badge">Media & Logs</span>
+                    <p>Records crop yields, updates the website, takes progress photos, and writes the detailed reports on our agricultural experiments.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Join Us Section -->
+        <section class="join-us">
+            <h2>Want to get involved?</h2>
+            <p>We are always looking for students who are interested in coding, biology, or just want to learn how to grow their own food. We meet every Tuesday and Thursday after school in the North Wing Lab.</p>
+            <button class="contact-btn">Email the Club Advisor</button>
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ==========================================
+        // UI & THEME TOGGLE LOGIC
+        // ==========================================
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const navLinks = document.getElementById('nav-links');
+        
+        // Mobile Hamburger Menu Toggle
+        hamburgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Light/Dark Theme Logic
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggleBtn.innerHTML = '☀️ Light Mode';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeToggleBtn.innerHTML = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggleBtn.innerHTML = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
