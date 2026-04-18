@@ -271,6 +271,32 @@
             transform: scale(1.05);
         }
 
+        /* Team Login Button */
+        .login-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .login-btn {
+            background-color: transparent;
+            color: var(--accent-blue);
+            border: 2px solid var(--accent-blue);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .login-btn:hover {
+            background-color: var(--accent-blue);
+            color: #ffffff;
+        }
+
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             nav { flex-wrap: wrap; }
@@ -311,6 +337,11 @@
 
     <main class="page-container">
         
+        <!-- Team Login Button -->
+        <div class="login-container">
+            <button class="login-btn" onclick="alert('Login portal coming soon!')"> Login for Team</button>
+        </div>
+
         <!-- Hero Banner -->
         <header class="page-banner">
             <h1>Meet the Innovators</h1>
@@ -360,7 +391,7 @@
         <!-- Join Us Section -->
         <section class="join-us">
             <h2>Want to get involved?</h2>
-            <p>We are always looking for students who are interested in coding, biology, or just want to learn how to grow their own food. We meet on Sundays in the North Wing Lab.</p>
+            <p>We are always looking for students who are interested in coding, biology, or just want to learn how to grow their own food. We meet every Tuesday and Thursday after school in the North Wing Lab.</p>
             <button class="contact-btn">Email the Club Advisor</button>
         </section>
 
@@ -383,17 +414,17 @@
         // Light/Dark Theme Logic
         if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
-            themeToggleBtn.innerHTML = '☀️ Light Mode';
+            themeToggleBtn.innerHTML = ' Light Mode';
         }
 
         themeToggleBtn.addEventListener('click', () => {
             if (document.body.getAttribute('data-theme') === 'dark') {
                 document.body.removeAttribute('data-theme');
-                themeToggleBtn.innerHTML = '🌙 Dark Mode';
+                themeToggleBtn.innerHTML = ' Dark Mode';
                 localStorage.setItem('theme', 'light');
             } else {
                 document.body.setAttribute('data-theme', 'dark');
-                themeToggleBtn.innerHTML = '☀️ Light Mode';
+                themeToggleBtn.innerHTML = ' Light Mode';
                 localStorage.setItem('theme', 'dark');
             }
         });
