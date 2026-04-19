@@ -342,6 +342,37 @@
             color: var(--accent-green);
         }
 
+        /* Gallery Navigation Arrows */
+        .prev-modal, .next-modal {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 40px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 0 8px 8px 0;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        .next-modal {
+            right: 0;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .prev-modal {
+            left: 0;
+        }
+
+        .prev-modal:hover, .next-modal:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: var(--accent-green);
+        }
+
         /* Join Us Section */
         .join-us {
             background-color: var(--panel-bg);
@@ -535,6 +566,8 @@
     <!-- Modal (Lightbox) for Images -->
     <div id="image-modal" class="modal">
         <span class="close-modal" onclick="closeModal()">&times;</span>
+        <span class="prev-modal" onclick="changeImage(-1, event)">&#10094;</span>
+        <span class="next-modal" onclick="changeImage(1, event)">&#10095;</span>
         <img class="modal-content" id="modal-img">
         <div id="modal-caption" class="modal-caption-text"></div>
     </div>
@@ -578,8 +611,15 @@
         const modalImg = document.getElementById("modal-img");
         const captionText = document.getElementById("modal-caption");
 
+        let currentImageIndex = 0;
+        let allGalleryImages = [];
+
         // Function to open the modal
         function openModal(element) {
+            // Find all images that are visible and find the index of the clicked one
+            allGalleryImages = Array.from(document.querySelectorAll('.gallery-img')).filter(img => img.style.display !== 'none');
+            currentImageIndex = allGalleryImages.indexOf(element);
+
             modal.style.display = "flex";
             // A slight delay ensures the CSS transition applies smoothly
             setTimeout(() => {
@@ -587,8 +627,31 @@
                 modalImg.style.transform = "scale(1)";
             }, 10);
             
-            modalImg.src = element.src;
-            captionText.innerHTML = element.alt; // Uses the image's alt text as the caption
+            updateModalContent();
+        }
+
+        // Function to update the image and caption inside the modal
+        function updateModalContent() {
+            if (currentImageIndex >= 0 && currentImageIndex < allGalleryImages.length) {
+                modalImg.src = allGalleryImages[currentImageIndex].src;
+                captionText.innerHTML = allGalleryImages[currentImageIndex].alt; 
+            }
+        }
+
+        // Function to change image left or right
+        function changeImage(direction, event) {
+            if (event) event.stopPropagation(); // Prevents click from bubbling up to the background
+
+            currentImageIndex += direction;
+            
+            // Loop back around if we hit the ends of the gallery
+            if (currentImageIndex >= allGalleryImages.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = allGalleryImages.length - 1;
+            }
+            
+            updateModalContent();
         }
 
         // Function to close the modal
