@@ -233,6 +233,55 @@
             font-size: 0.95rem;
         }
 
+        /* --- Behind the Scenes Gallery CSS --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            background-color: var(--panel-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 4px solid var(--accent-blue);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-img-placeholder {
+            width: 100%;
+            height: 220px;
+            background-color: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--nav-border);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--nav-border);
+            display: none; /* Hidden until you add a real image src */
+        }
+
+        .gallery-caption {
+            padding: 1rem;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
         /* Join Us Section */
         .join-us {
             background-color: var(--panel-bg);
@@ -339,7 +388,7 @@
         
         <!-- Team Login Button -->
         <div class="login-container">
-            <button class="login-btn" onclick="alert('Login portal coming soon!')"> Login for Team</button>
+            <button class="login-btn" onclick="alert('Login portal coming soon!')">🔒 Login for Team</button>
         </div>
 
         <!-- Hero Banner -->
@@ -388,10 +437,40 @@
             </div>
         </section>
 
+        <!-- Behind The Scenes / Photo Gallery Section -->
+        <section class="content-section">
+            <h2 class="section-title">Behind the Scenes</h2>
+            <div class="gallery-grid">
+                
+                <!-- Action Shot 1 -->
+                <div class="gallery-item">
+                    <!-- When you have an actual photo, delete the 'gallery-img-placeholder' div and uncomment the 'img' tag below it -->
+                    <div class="gallery-img-placeholder">📸</div>
+                    <!-- <img src="your-image-1.jpg" alt="Team building DWC" class="gallery-img" style="display:block;"> -->
+                    <div class="gallery-caption">Constructing the Deep Water Culture beds in the North Wing</div>
+                </div>
+
+                <!-- Action Shot 2 -->
+                <div class="gallery-item">
+                    <div class="gallery-img-placeholder">📸</div>
+                    <!-- <img src="your-image-2.jpg" alt="Wiring ESP32" class="gallery-img" style="display:block;"> -->
+                    <div class="gallery-caption">Wiring and testing the ESP32 microcontrollers for live data</div>
+                </div>
+
+                <!-- Action Shot 3 -->
+                <div class="gallery-item">
+                    <div class="gallery-img-placeholder">📸</div>
+                    <!-- <img src="your-image-3.jpg" alt="Mushroom Hut" class="gallery-img" style="display:block;"> -->
+                    <div class="gallery-caption">Calibrating ultrasonic foggers inside the Mushroom Hut</div>
+                </div>
+
+            </div>
+        </section>
+
         <!-- Join Us Section -->
         <section class="join-us">
             <h2>Want to get involved?</h2>
-            <p>We are always looking for students who are interested in coding, biology, or just want to learn how to grow their own food. We meet every Tuesday and Thursday after school in the North Wing Lab.</p>
+            <p>We are always looking for students who are interested in coding, biology, or just want to learn how to grow their own food. We meet on Sundays in the North Wing Lab.</p>
             <button class="contact-btn">Email the Club Advisor</button>
         </section>
 
@@ -414,17 +493,17 @@
         // Light/Dark Theme Logic
         if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
-            themeToggleBtn.innerHTML = ' Light Mode';
+            themeToggleBtn.innerHTML = '☀️ Light Mode';
         }
 
         themeToggleBtn.addEventListener('click', () => {
             if (document.body.getAttribute('data-theme') === 'dark') {
                 document.body.removeAttribute('data-theme');
-                themeToggleBtn.innerHTML = ' Dark Mode';
+                themeToggleBtn.innerHTML = '🌙 Dark Mode';
                 localStorage.setItem('theme', 'light');
             } else {
                 document.body.setAttribute('data-theme', 'dark');
-                themeToggleBtn.innerHTML = ' Light Mode';
+                themeToggleBtn.innerHTML = '☀️ Light Mode';
                 localStorage.setItem('theme', 'dark');
             }
         });
