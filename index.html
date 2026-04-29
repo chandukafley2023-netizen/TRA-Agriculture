@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | TRA Agriculture</title>
+    <!-- Linked to the master stylesheet! -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +16,7 @@
 
         <div class="nav-links" id="nav-links">
             <a href="index.html" class="active" title="Go to Home/Dashboard">Dashboard</a>
-            <a href="greenhouse.html">Greenhouses</a>
+            <a href="greenhouses.html">Greenhouses</a>
             <a href="mushroom.html">Mushroom Hut</a>
             <a href="ourteam.html">Our Team</a>
             <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
@@ -24,51 +25,55 @@
 
     <main class="page-container">
         
+        <!-- Hero Banner -->
         <header class="page-banner">
             <h1>Command Center</h1>
             <p>Welcome to the TRA Agri-Tech Main Dashboard. Monitor our live hydroponic environments, fungal incubators, and automated nutrient systems in real-time.</p>
             <p style="font-weight: bold; margin-top: 10px; color: var(--text-main);">Local System Time: <span id="live-clock">Loading...</span></p>
         </header>
 
+        <!-- System Status Overview -->
         <h2 class="section-title">Live System Status</h2>
         <section class="grid-container">
             
+            <!-- Greenhouse Temp -->
             <div class="card">
                 <div class="card-icon">🌡️</div>
                 <h3>Greenhouse Temp</h3>
-                <h1 style="font-size: 2.5rem; margin: 10px 0;">22.4°C</h1>
+                <h1 style="font-size: 2.5rem; margin: 10px 0;"><span id="sensor-gh-temp">--</span><span style="font-size: 1.5rem; color: var(--text-muted);">°C</span></h1>
                 <p>North Wing DWC & NFT Beds</p>
-                <span class="badge" style="background-color: #4CAF50; color: white;">Status: Optimal</span>
+                <span id="status-gh-temp" class="badge" style="background-color: var(--text-muted); color: white;">Status: Awaiting Connection</span>
             </div>
 
+            <!-- Mushroom Hut Humidity -->
             <div class="card">
                 <div class="card-icon">🌫️</div>
                 <h3>Fungal Lab Humidity</h3>
-                <h1 style="font-size: 2.5rem; margin: 10px 0;">92%</h1>
+                <h1 style="font-size: 2.5rem; margin: 10px 0;"><span id="sensor-fh-hum">--</span><span style="font-size: 1.5rem; color: var(--text-muted);">%</span></h1>
                 <p>Blue Oyster Incubator</p>
-                <span class="badge" style="background-color: #4CAF50; color: white;">Status: Optimal</span>
+                <span id="status-fh-hum" class="badge" style="background-color: var(--text-muted); color: white;">Status: Awaiting Connection</span>
             </div>
 
+            <!-- Reservoir pH -->
             <div class="card">
                 <div class="card-icon">🧪</div>
                 <h3>Reservoir pH Level</h3>
-                <h1 style="font-size: 2.5rem; margin: 10px 0;">6.8</h1>
+                <h1 style="font-size: 2.5rem; margin: 10px 0;"><span id="sensor-res-ph">--</span></h1>
                 <p>Main Hydroponic Tank</p>
-                <span class="badge" style="background-color: #FF9800; color: white;">Status: High - Add Buffer</span>
+                <span id="status-res-ph" class="badge" style="background-color: var(--text-muted); color: white;">Status: Awaiting Connection</span>
             </div>
 
         </section>
 
+        <!-- Recent Alerts & Logs -->
         <h2 class="section-title">System Alerts & Logs</h2>
         <section class="content-section" style="background: rgba(0,0,0,0.05); padding: 20px; border-radius: 10px;">
-            <ul style="list-style-type: none; padding: 0; line-height: 2;">
-                <li>🟢 <strong>08:15 AM:</strong> Automated lights turned ON in North Wing Greenhouses.</li>
-                <li>🟡 <strong>07:30 AM:</strong> Warning: CO2 levels reached 1050 ppm in Mushroom Hut. Exhaust fans engaged.</li>
-                <li>🟢 <strong>07:35 AM:</strong> CO2 levels stabilized to 800 ppm. Exhaust fans disengaged.</li>
-                <li>🟢 <strong>06:00 AM:</strong> Morning nutrient dosing cycle completed successfully.</li>
+            <ul id="ha-logs-list" style="list-style-type: none; padding: 0; line-height: 2; color: var(--text-muted);">
+                <li><em>Waiting for Home Assistant log stream...</em></li>
             </ul>
         </section>
 
+        <!-- Quick Links -->
         <h2 class="section-title">Quick Links</h2>
         <section class="grid-container">
             <div class="card" style="text-align: center; cursor: pointer;" onclick="window.location.href='greenhouses.html'">
@@ -126,9 +131,76 @@
             const timeString = now.toLocaleTimeString();
             document.getElementById('live-clock').textContent = timeString;
         }
-        // Update the clock every second
         setInterval(updateClock, 1000);
-        updateClock(); // Call it once immediately to prevent the "Loading..." delay
+        updateClock(); 
+
+        // ==========================================
+        // HOME ASSISTANT INTEGRATION
+        // ==========================================
+        /*
+          Instructions for integrating with Home Assistant:
+          1. Go to your Home Assistant Profile -> Security -> Create Long-Lived Access Token.
+          2. Paste your HA URL and Token below.
+          3. Change the entity_ids in the fetch requests to match your actual sensor IDs.
+        */
+        
+        const HA_URL = "http://YOUR_HA_IP:8123"; // Replace with your Home Assistant IP/URL
+        const HA_TOKEN = "YOUR_LONG_LIVED_ACCESS_TOKEN"; // Replace with your token
+
+        // Helper function to fetch sensor data
+        async function fetchSensorData(entityId) {
+            try {
+                const response = await fetch(`${HA_URL}/api/states/${entityId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${HA_TOKEN}`,
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error("Home Assistant connection error:", error);
+                return null;
+            }
+        }
+
+        // Main function to update UI with HA data
+        async function updateHomeAssistantDashboard() {
+            // Uncomment and configure these when ready:
+            
+            /*
+            // 1. Fetch Greenhouse Temp
+            const ghTemp = await fetchSensorData('sensor.greenhouse_temperature');
+            if (ghTemp) {
+                document.getElementById('sensor-gh-temp').textContent = parseFloat(ghTemp.state).toFixed(1);
+                document.getElementById('status-gh-temp').textContent = 'Status: Live';
+                document.getElementById('status-gh-temp').style.backgroundColor = '#4CAF50';
+            }
+
+            // 2. Fetch Mushroom Humidity
+            const fhHum = await fetchSensorData('sensor.mushroom_humidity');
+            if (fhHum) {
+                document.getElementById('sensor-fh-hum').textContent = parseFloat(fhHum.state).toFixed(0);
+                document.getElementById('status-fh-hum').textContent = 'Status: Live';
+                document.getElementById('status-fh-hum').style.backgroundColor = '#4CAF50';
+            }
+
+            // 3. Fetch Reservoir pH
+            const resPh = await fetchSensorData('sensor.reservoir_ph');
+            if (resPh) {
+                document.getElementById('sensor-res-ph').textContent = parseFloat(resPh.state).toFixed(1);
+                document.getElementById('status-res-ph').textContent = 'Status: Live';
+                document.getElementById('status-res-ph').style.backgroundColor = '#4CAF50';
+            }
+            */
+        }
+
+        // Automatically pull data every 30 seconds when configured
+        // setInterval(updateHomeAssistantDashboard, 30000);
+        // updateHomeAssistantDashboard();
     </script>
 </body>
 </html>
