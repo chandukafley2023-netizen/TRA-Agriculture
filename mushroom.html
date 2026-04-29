@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Login | TRA Agriculture</title>
+    <title>Mushroom Hut | TRA Agriculture</title>
     <!-- Linked to the master stylesheet! -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,41 +12,84 @@
     <nav>
         <a href="index.html" class="logo">🌱 TRA Agri-Tech</a>
         
+        <!-- Hamburger Menu Icon -->
         <div class="hamburger" id="hamburger-menu">☰</div>
 
+        <!-- Navigation Links & Theme Toggle -->
         <div class="nav-links" id="nav-links">
             <a href="index.html">Dashboard</a>
-            <a href="greenhouse.html">Greenhouses</a>
-            <a href="mushroom.html">Mushroom Hut</a>
+            <a href="greenhouses.html">Greenhouses</a>
+            <a href="mushroom.html" class="active">Mushroom Hut</a>
             <a href="ourteam.html">Our Team</a>
             <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
         </div>
     </nav>
 
-    <main class="login-wrapper">
-        <div class="login-card">
-            <div class="login-icon">🔒</div>
-            <h2>Team Portal</h2>
-            <p>Authorized club members only.</p>
-            
-            <form id="login-form" onsubmit="handleLogin(event)">
-                <div class="input-group">
-                    <label for="email">School Email Address</label>
-                    <input type="email" id="email" required placeholder="student@tra.edu">
-                </div>
-                
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required placeholder="••••••••">
-                </div>
-                
-                <button type="submit" class="submit-btn">Secure Login</button>
-            </form>
+    <main class="page-container">
+        
+        <!-- Hero Banner -->
+        <header class="page-banner">
+            <h1>🍄 The Fungal Lab</h1>
+            <p>Welcome to our dedicated Mycology department. Unlike our hydroponic greenhouses that rely on intense light and nutrient-rich water, the Mushroom Hut focuses on the science of decomposition, extreme humidity control, and precise CO2 management.</p>
+        </header>
 
-            <div class="login-footer">
-                Forgot your password? <a href="#">Contact the System Admin</a>
+        <!-- What We Grow Section -->
+        <h2 class="section-title">Currently Cultivating</h2>
+        <section class="grid-container">
+            
+            <div class="card">
+                <div class="card-icon">🦪</div>
+                <h3>Blue Oyster Mushrooms</h3>
+                <p>One of our fastest-growing strains. Oyster mushrooms are incredibly aggressive colonizers. We grow these on sterilized straw and hardwood sawdust blocks. They are perfect for teaching students the rapid lifecycle of mycelium.</p>
+                <span class="badge">Harvest Time: 3 Weeks</span>
             </div>
-        </div>
+
+            <div class="card placeholder-card">
+                <div class="blurred-content">
+                    <div class="card-icon">❓</div>
+                    <h3>Unknown Strain</h3>
+                    <p>This incubator space is currently being prepped for our next fungal experiment. Temperature and humidity are being calibrated.</p>
+                    <span class="badge">TBD</span>
+                </div>
+                <div class="coming-soon-overlay">
+                    Incubating...<br>
+                    <span style="font-size: 0.85rem; color: var(--text-main); font-weight: normal;">Strain TBD</span>
+                </div>
+            </div>
+
+            <div class="card placeholder-card">
+                <div class="blurred-content">
+                    <div class="card-icon">❓</div>
+                    <h3>Unknown Strain</h3>
+                    <p>This incubator space is currently being prepped for our next fungal experiment. Temperature and humidity are being calibrated.</p>
+                    <span class="badge">TBD</span>
+                </div>
+                <div class="coming-soon-overlay">
+                    Incubating...<br>
+                    <span style="font-size: 0.85rem; color: var(--text-main); font-weight: normal;">Space Available</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Technology Section -->
+        <h2 class="section-title">Hut Technology & Sensors</h2>
+        <section class="grid-container">
+            
+            <div class="card">
+                <div class="card-icon">🌫️</div>
+                <h3>Ultrasonic Foggers</h3>
+                <p>Mushrooms don't have skin to trap moisture, so they can dry out easily. We use industrial ultrasonic foggers tied directly to our live dashboard's humidity sensors to keep the air at a constant 85-95% relative humidity.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">💨</div>
+                <h3>CO2 Exhaust System</h3>
+                <p>Unlike plants, fungi inhale oxygen and exhale carbon dioxide (CO2). If CO2 levels get too high, the mushrooms grow long, stringy stems. Our automated exhaust fans trigger whenever CO2 surpasses 1000 ppm.</p>
+            </div>
+
+        </section>
+
     </main>
 
     <!-- JAVASCRIPT LOGIC -->
@@ -58,17 +101,19 @@
         const hamburgerMenu = document.getElementById('hamburger-menu');
         const navLinks = document.getElementById('nav-links');
         
-        // Mobile Hamburger Menu Toggle
+        // 1. Mobile Hamburger Menu Toggle
         hamburgerMenu.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
 
-        // Light/Dark Theme Logic
+        // 2. Light/Dark Theme Logic
+        // Check local storage to see if the user previously chose dark mode
         if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             themeToggleBtn.innerHTML = '☀️ Light Mode';
         }
 
+        // Toggle theme when button is clicked
         themeToggleBtn.addEventListener('click', () => {
             if (document.body.getAttribute('data-theme') === 'dark') {
                 document.body.removeAttribute('data-theme');
@@ -80,19 +125,6 @@
                 localStorage.setItem('theme', 'dark');
             }
         });
-
-        // ==========================================
-        // LOGIN LOGIC
-        // ==========================================
-        function handleLogin(event) {
-            event.preventDefault(); // Prevents the page from refreshing immediately
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            // This is a placeholder! Once you set up Firebase Authentication, you will link it here.
-            alert("Login attempt for " + email + ".\n\nNote: Database authentication is not yet connected!");
-        }
     </script>
 </body>
 </html>
