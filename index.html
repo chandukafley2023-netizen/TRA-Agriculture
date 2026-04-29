@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greenhouses | TRA Agriculture</title>
-    <!-- Linked to the master stylesheet! -->
+    <title>Dashboard | TRA Agriculture</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="logo">🌱 TRA Agri-Tech</a>
+        <a href="index.html" class="logo" title="Go to Home/Dashboard">🌱 TRA Agri-Tech</a>
         
         <div class="hamburger" id="hamburger-menu">☰</div>
 
         <div class="nav-links" id="nav-links">
-            <a href="index.html">Dashboard</a>
-            <a href="greenhouse.html" class="active">Greenhouses</a>
+            <a href="index.html" class="active" title="Go to Home/Dashboard">Dashboard</a>
+            <a href="greenhouses.html">Greenhouses</a>
             <a href="mushroom.html">Mushroom Hut</a>
             <a href="ourteam.html">Our Team</a>
             <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
@@ -25,76 +24,72 @@
 
     <main class="page-container">
         
-        <!-- Hero Banner -->
         <header class="page-banner">
-            <h1>The North Wing Greenhouses</h1>
-            <p>Welcome to the core of our agricultural technology program. Our twin greenhouses are climate-controlled, soil-free environments designed to maximize yield, minimize water usage, and serve as a living laboratory for TRA students.</p>
+            <h1>Command Center</h1>
+            <p>Welcome to the TRA Agri-Tech Main Dashboard. Monitor our live hydroponic environments, fungal incubators, and automated nutrient systems in real-time.</p>
+            <p style="font-weight: bold; margin-top: 10px; color: var(--text-main);">Local System Time: <span id="live-clock">Loading...</span></p>
         </header>
 
-        <!-- Our Systems Section -->
-        <section class="content-section">
-            <h2>Our Hydroponic Systems</h2>
-            <div class="system-grid">
-                
-                <!-- DWC Card -->
-                <div class="card">
-                    <div class="card-image-placeholder">🌊</div>
-                    <h3>Deep Water Culture (DWC)</h3>
-                    <p>In our DWC beds, plant roots are suspended directly in highly oxygenated, nutrient-rich water. This system is incredibly fast-growing and water-efficient, making it perfect for our leafy greens.</p>
-                    <span class="tech-badge">Sensor Monitored</span>
-                </div>
-
-                <!-- NFT Card -->
-                <div class="card">
-                    <div class="card-image-placeholder">🚰</div>
-                    <h3>Nutrient Film Technique (NFT)</h3>
-                    <p>NFT uses shallow PVC channels to flow a very thin "film" of water constantly past the plant roots. This ensures the plants get exactly the nutrients they need while exposing the upper roots to abundant oxygen.</p>
-                    <span class="tech-badge">Automated Flow</span>
-                </div>
-
-                <!-- Dutch Bucket Card -->
-                <div class="card">
-                    <div class="card-image-placeholder">🍅</div>
-                    <h3>Dutch Bucket System</h3>
-                    <p>For large, vining plants like tomatoes and cucumbers, we use heavy-duty buckets filled with a lightweight medium (like clay pebbles). A drip emitter feeds each plant individually.</p>
-                    <span class="tech-badge">Drip Irrigation</span>
-                </div>
-
+        <h2 class="section-title">Live System Status</h2>
+        <section class="grid-container">
+            
+            <div class="card">
+                <div class="card-icon">🌡️</div>
+                <h3>Greenhouse Temp</h3>
+                <h1 style="font-size: 2.5rem; margin: 10px 0;">22.4°C</h1>
+                <p>North Wing DWC & NFT Beds</p>
+                <span class="badge" style="background-color: #4CAF50; color: white;">Status: Optimal</span>
             </div>
+
+            <div class="card">
+                <div class="card-icon">🌫️</div>
+                <h3>Fungal Lab Humidity</h3>
+                <h1 style="font-size: 2.5rem; margin: 10px 0;">92%</h1>
+                <p>Blue Oyster Incubator</p>
+                <span class="badge" style="background-color: #4CAF50; color: white;">Status: Optimal</span>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🧪</div>
+                <h3>Reservoir pH Level</h3>
+                <h1 style="font-size: 2.5rem; margin: 10px 0;">6.8</h1>
+                <p>Main Hydroponic Tank</p>
+                <span class="badge" style="background-color: #FF9800; color: white;">Status: High - Add Buffer</span>
+            </div>
+
         </section>
 
-        <!-- Current Crops Section -->
-        <section class="content-section">
-            <h2>Currently Cultivating</h2>
-            <div class="crop-grid">
-                
-                <div class="card">
-                    <div class="card-image-placeholder">🥬</div>
-                    <h3>Butterhead Lettuce</h3>
-                    <p>Our staple crop. Grown in the DWC beds, this lettuce goes from seedling to full harvest in just under 35 days. It thrives in our targeted 22°C water temperature.</p>
-                </div>
+        <h2 class="section-title">System Alerts & Logs</h2>
+        <section class="content-section" style="background: rgba(0,0,0,0.05); padding: 20px; border-radius: 10px;">
+            <ul style="list-style-type: none; padding: 0; line-height: 2;">
+                <li>🟢 <strong>08:15 AM:</strong> Automated lights turned ON in North Wing Greenhouses.</li>
+                <li>🟡 <strong>07:30 AM:</strong> Warning: CO2 levels reached 1050 ppm in Mushroom Hut. Exhaust fans engaged.</li>
+                <li>🟢 <strong>07:35 AM:</strong> CO2 levels stabilized to 800 ppm. Exhaust fans disengaged.</li>
+                <li>🟢 <strong>06:00 AM:</strong> Morning nutrient dosing cycle completed successfully.</li>
+            </ul>
+        </section>
 
-                <div class="card">
-                    <div class="card-image-placeholder">🌿</div>
-                    <h3>Genovese Basil</h3>
-                    <p>Housed in our NFT channels, our basil provides a highly aromatic yield. Hydroponic basil grows exceptionally fast because it never has to fight soil resistance.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-image-placeholder">🍓</div>
-                    <h3>Alpine Strawberries</h3>
-                    <p>An experimental crop for the club this semester! We are carefully tweaking the Potassium and Phosphorus (EC) levels in the reservoir to encourage sweet, continuous fruiting.</p>
-                </div>
-
+        <h2 class="section-title">Quick Links</h2>
+        <section class="grid-container">
+            <div class="card" style="text-align: center; cursor: pointer;" onclick="window.location.href='greenhouses.html'">
+                <h3>🌿 View Greenhouses</h3>
+                <p>Check the lettuce and basil.</p>
+            </div>
+            <div class="card" style="text-align: center; cursor: pointer;" onclick="window.location.href='mushroom.html'">
+                <h3>🍄 View Fungal Lab</h3>
+                <p>Check the Blue Oysters.</p>
+            </div>
+            <div class="card" style="text-align: center; cursor: pointer;" onclick="window.location.href='ourteam.html'">
+                <h3>👥 Meet the Team</h3>
+                <p>View the project innovators.</p>
             </div>
         </section>
 
     </main>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         // ==========================================
-        // UI & THEME TOGGLE LOGIC (Matches Dashboard)
+        // UI & THEME TOGGLE LOGIC
         // ==========================================
         const themeToggleBtn = document.getElementById('theme-toggle');
         const hamburgerMenu = document.getElementById('hamburger-menu');
@@ -122,6 +117,18 @@
                 localStorage.setItem('theme', 'dark');
             }
         });
+
+        // ==========================================
+        // DASHBOARD LIVE CLOCK LOGIC
+        // ==========================================
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('live-clock').textContent = timeString;
+        }
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+        updateClock(); // Call it once immediately to prevent the "Loading..." delay
     </script>
 </body>
 </html>
