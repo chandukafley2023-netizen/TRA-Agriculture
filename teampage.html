@@ -124,7 +124,7 @@
             <a href="mushroom.html">Mushroom Hut</a>
             <a href="ourteam.html">Our Team</a>
             <!-- Logout button instead of theme toggle for the portal -->
-            <button class="theme-btn" style="border-color: var(--danger-red); color: var(--danger-red);" onclick="window.location.href='index.html'">🚪 Logout</button>
+            <button class="theme-btn" style="border-color: var(--danger-red); color: var(--danger-red);" onclick="logout()">🚪 Logout</button>
         </div>
     </nav>
 
@@ -290,6 +290,20 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        // ==========================================
+        // AUTHENTICATION & LOGOUT LOGIC
+        // ==========================================
+        // Force redirect back to login if they aren't marked as logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn'); // Clear the "Remember Me" memory
+            window.location.href = 'index.html';   // Send back to dashboard
+        }
+
         // ==========================================
         // UI & THEME TOGGLE LOGIC
         // ==========================================
