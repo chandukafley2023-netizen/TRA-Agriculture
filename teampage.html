@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Portal | TRA Agriculture</title>
+    <!-- Linked to the master stylesheet! -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- PORTAL SPECIFIC STYLES --- */
+        .portal-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Left side is wider for controls, right is chat */
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 900px) {
+            .portal-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Tabs for Sector Controls */
+        .tab-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--nav-border);
+            padding-bottom: 10px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--accent-blue);
+            background: var(--bg-color);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-blue);
+            border-bottom: 3px solid var(--accent-blue);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Control Toggles */
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        /* Chat Box */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border: 2px solid var(--nav-border);
+        }
+
+        .chat-message { margin-bottom: 15px; }
+        .chat-name { font-weight: bold; color: var(--accent-blue); font-size: 0.85rem; margin-bottom: 4px; display: block; }
+        .chat-text { 
+            background-color: var(--panel-bg); 
+            padding: 10px 15px; 
+            border-radius: 0 12px 12px 12px; 
+            margin: 0; 
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 0.95rem;
+        }
+        
+        /* My own messages */
+        .chat-message.me { text-align: right; }
+        .chat-message.me .chat-name { color: var(--accent-green); }
+        .chat-message.me .chat-text { border-radius: 12px 0 12px 12px; background-color: var(--accent-green); color: white;}
+
+        .chat-input-group { display: flex; gap: 10px; }
+        .chat-input-group input { flex-grow: 1; }
+        .chat-input-group button { width: auto; margin-top: 0; padding: 12px 20px;}
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">🌱 TRA Agri-Tech</a>
+        
+        <div class="hamburger" id="hamburger-menu">☰</div>
+
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="greenhouses.html">Greenhouses</a>
+            <a href="mushroom.html">Mushroom Hut</a>
+            <a href="ourteam.html">Our Team</a>
+            <!-- Logout button instead of theme toggle for the portal -->
+            <button class="theme-btn" style="border-color: var(--danger-red); color: var(--danger-red);" onclick="window.location.href='index.html'">🚪 Logout</button>
+        </div>
+    </nav>
+
+    <main class="page-container">
+        
+        <!-- Welcome Banner -->
+        <header class="page-banner" style="border-left-color: var(--warning-orange); padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h1 style="font-size: 2.2rem; margin-bottom: 5px;">Welcome back, Team Member</h1>
+                    <p>Internal Operations & Sector Controls</p>
+                </div>
+                <span class="badge" style="background-color: var(--accent-blue); color: white; font-size: 1rem; padding: 8px 16px;">Access Level: Admin</span>
+            </div>
+        </header>
+
+        <div class="portal-grid">
+            
+            <!-- LEFT COLUMN: Controls & Reporting -->
+            <div class="left-col">
+                
+                <!-- Sector Control Tabs -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h2>🎛️ Sector Controls</h2>
+                    
+                    <div class="tab-nav">
+                        <button class="tab-btn active" onclick="openTab(event, 'auto-tab')">⚙️ Automation</button>
+                        <button class="tab-btn" onclick="openTab(event, 'nutri-tab')">🧪 Nutrition</button>
+                        <button class="tab-btn" onclick="openTab(event, 'struct-tab')">🏗️ Structure</button>
+                        <button class="tab-btn" onclick="openTab(event, 'doc-tab')">📝 Media</button>
+                    </div>
+
+                    <!-- Automation Tab -->
+                    <div id="auto-tab" class="tab-content active">
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">Manual hardware overrides for relays and smart plugs.</p>
+                        
+                        <div class="control-row">
+                            <div>
+                                <strong>Main Grow Lights</strong><br>
+                                <span style="font-size: 0.85rem; color: var(--text-muted);">North Wing DWC</span>
+                            </div>
+                            <button class="submit-btn" style="width: auto; margin:0; padding: 8px 20px; background-color: var(--danger-red);">Turn OFF</button>
+                        </div>
+                        
+                        <div class="control-row">
+                            <div>
+                                <strong>Mushroom Exhaust Fan</strong><br>
+                                <span style="font-size: 0.85rem; color: var(--text-muted);">Basement Incubator</span>
+                            </div>
+                            <button class="submit-btn" style="width: auto; margin:0; padding: 8px 20px;">Turn ON</button>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Tab -->
+                    <div id="nutri-tab" class="tab-content">
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">Log chemical additions to the main reservoir.</p>
+                        <div class="input-group">
+                            <label>Chemical Added</label>
+                            <select style="width: 100%; padding: 12px; border: 2px solid var(--nav-border); border-radius: 8px; background-color: var(--bg-color); color: var(--text-main);">
+                                <option>pH Down (Phosphoric Acid)</option>
+                                <option>pH Up (Potassium Hydroxide)</option>
+                                <option>FloraGrow (Nitrogen)</option>
+                                <option>FloraBloom (Phosphorus)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Amount (mL)</label>
+                            <input type="number" placeholder="e.g., 50">
+                        </div>
+                        <button class="submit-btn">Log Nutrient Addition</button>
+                    </div>
+
+                    <!-- Structure Tab -->
+                    <div id="struct-tab" class="tab-content">
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">Hardware maintenance checklists.</p>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <label style="display: flex; gap: 10px; cursor: pointer;"><input type="checkbox"> Cleaned Reservoir Intake Filter</label>
+                            <label style="display: flex; gap: 10px; cursor: pointer;"><input type="checkbox"> Checked DWC Airstones for clogs</label>
+                            <label style="display: flex; gap: 10px; cursor: pointer;"><input type="checkbox"> Wiped down Greenhouse acrylic panels</label>
+                        </div>
+                        <button class="submit-btn" style="margin-top: 15px;">Submit Weekly Maintenance</button>
+                    </div>
+
+                    <!-- Documentation Tab -->
+                    <div id="doc-tab" class="tab-content">
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">Upload new gallery images or lab notes.</p>
+                        <div class="input-group">
+                            <label>Media Title</label>
+                            <input type="text" placeholder="e.g., Day 14 Basil Growth">
+                        </div>
+                        <div class="input-group">
+                            <label>Image File</label>
+                            <input type="file" style="padding: 9px;">
+                        </div>
+                        <button class="submit-btn">Upload to Database</button>
+                    </div>
+
+                </div>
+
+                <!-- Daily Report Submission -->
+                <div class="card">
+                    <h2>📋 Submit Daily Report</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Summarize what you accomplished during today's session.</p>
+                    
+                    <form onsubmit="submitReport(event)">
+                        <div class="input-group">
+                            <label>Task Description</label>
+                            <textarea id="task-desc" rows="4" required placeholder="What did you build, fix, or harvest today?" style="width: 100%; padding: 12px; border: 2px solid var(--nav-border); border-radius: 8px; background-color: var(--bg-color); color: var(--text-main); font-family: inherit; resize: vertical; box-sizing: border-box;"></textarea>
+                        </div>
+                        <div style="display: flex; gap: 15px;">
+                            <div class="input-group" style="flex: 1;">
+                                <label>Hours Worked</label>
+                                <input type="number" id="task-hours" required min="0.5" step="0.5" placeholder="1.5">
+                            </div>
+                            <div class="input-group" style="flex: 1;">
+                                <label>&nbsp;</label> <!-- Spacing alignment -->
+                                <button type="submit" class="submit-btn" style="margin-top: 0;">Submit Log</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Team Chat -->
+            <div class="right-col">
+                <div class="card chat-container" style="height: 100%;">
+                    <h2>💬 Team Comms</h2>
+                    
+                    <div class="chat-box" id="chat-box">
+                        <!-- System Message -->
+                        <div class="chat-message" style="text-align: center;">
+                            <span style="font-size: 0.8rem; color: var(--text-muted); background: var(--bg-color); padding: 2px 8px; border-radius: 10px;">Chat secured & encrypted</span>
+                        </div>
+
+                        <!-- Mock Chat History -->
+                        <div class="chat-message">
+                            <span class="chat-name">Sarah (Nutrition)</span>
+                            <p class="chat-text">Just checked the reservoir, pH was creeping up to 6.9. I added 30mL of pH Down. Should stabilize soon.</p>
+                        </div>
+                        
+                        <div class="chat-message">
+                            <span class="chat-name">Marcus (Structure)</span>
+                            <p class="chat-text">Copy that. By the way, the PVC joint on row 3 of the NFT is dripping slightly. I'll patch it tomorrow after classes.</p>
+                        </div>
+
+                        <div class="chat-message">
+                            <span class="chat-name">System (Bot)</span>
+                            <p class="chat-text" style="background: var(--warning-orange); color: white;">⚠️ Alert: Humidity dropping in Mushroom Hut (82%).</p>
+                        </div>
+                    </div>
+
+                    <form class="chat-input-group" onsubmit="sendChatMessage(event)">
+                        <input type="text" id="chat-input" required class="input-group" style="margin:0; padding: 12px; border: 2px solid var(--nav-border); border-radius: 8px; background-color: var(--bg-color); color: var(--text-main);" placeholder="Type message...">
+                        <button type="submit" class="submit-btn">Send</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ==========================================
+        // UI & THEME TOGGLE LOGIC
+        // ==========================================
+        const hamburgerMenu = document.getElementById('hamburger-menu');
+        const navLinks = document.getElementById('nav-links');
+        
+        hamburgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+        }
+
+        // ==========================================
+        // PORTAL LOGIC: TABS
+        // ==========================================
+        function openTab(evt, tabId) {
+            // Hide all tab content
+            const tabContent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContent.length; i++) {
+                tabContent[i].classList.remove("active");
+            }
+            
+            // Remove 'active' class from all buttons
+            const tabBtns = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabBtns.length; i++) {
+                tabBtns[i].classList.remove("active");
+            }
+            
+            // Show current tab and add active class to button
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // ==========================================
+        // PORTAL LOGIC: CHAT & REPORTS
+        // ==========================================
+        function sendChatMessage(event) {
+            event.preventDefault();
+            const inputField = document.getElementById('chat-input');
+            const messageText = inputField.value.trim();
+            
+            if(messageText === "") return;
+
+            const chatBox = document.getElementById('chat-box');
+            
+            // Create new message element (styled as 'me')
+            const newMessage = document.createElement('div');
+            newMessage.className = 'chat-message me';
+            newMessage.innerHTML = `
+                <span class="chat-name">You</span>
+                <p class="chat-text">${messageText}</p>
+            `;
+            
+            // Append to box and scroll to bottom
+            chatBox.appendChild(newMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            // Clear input
+            inputField.value = '';
+        }
+
+        function submitReport(event) {
+            event.preventDefault();
+            const desc = document.getElementById('task-desc').value;
+            const hours = document.getElementById('task-hours').value;
+            
+            // Fake database submission alert
+            alert(`✅ Log Submitted Successfully!\n\nTask: ${desc}\nTime logged: ${hours} hours.\n\n(Data sent to Firebase placeholder)`);
+            
+            // Clear form
+            document.getElementById('task-desc').value = '';
+            document.getElementById('task-hours').value = '';
+        }
+    </script>
+</body>
+</html>
