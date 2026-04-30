@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Team | TRA Agriculture</title>
-    <!-- Linked to the master stylesheet! -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +15,7 @@
 
         <div class="nav-links" id="nav-links">
             <a href="index.html">Dashboard</a>
-            <a href="greenhouses.html">Greenhouses</a>
+            <a href="greenhouse.html">Greenhouses</a>
             <a href="mushroom.html">Mushroom Hut</a>
             <a href="teampage.html" class="active">Our Team</a>
             <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
@@ -25,23 +24,19 @@
 
     <main class="page-container">
         
-        <!-- Team Login Button -->
         <div class="login-container">
-            <button class="login-btn" onclick="window.location.href='login.html'">🔒 Login for Team</button>
+            <button class="login-btn" onclick="window.location.href='portal.html'">🔒 Enter Team Portal</button>
         </div>
 
-        <!-- Hero Banner -->
         <header class="page-banner">
             <h1>Meet the Innovators</h1>
             <p>We are a dedicated group of students at TRA combining computer science, botany, and engineering to build sustainable agricultural systems for our school campus.</p>
         </header>
 
-        <!-- Team Roster Section -->
         <section class="content-section">
             <h2 class="section-title">The Core Team</h2>
             <div class="team-grid">
                 
-                <!-- Automation Sector -->
                 <div class="card">
                     <div class="profile-pic">⚙️</div>
                     <h3>Automation Team</h3>
@@ -49,7 +44,6 @@
                     <p>Handles the real-time dashboard, Firebase database integration, and the automated hardware systems that monitor our crops.</p>
                 </div>
 
-                <!-- Nutrition Sector -->
                 <div class="card">
                     <div class="profile-pic">🧪</div>
                     <h3>Nutrition Team</h3>
@@ -57,7 +51,6 @@
                     <p>Manages daily nutrient dosing, monitors pH and EC levels, and ensures our plants receive the exact chemical balance they need to thrive.</p>
                 </div>
 
-                <!-- Structure Sector -->
                 <div class="card">
                     <div class="profile-pic">🏗️</div>
                     <h3>Structure Team</h3>
@@ -65,7 +58,6 @@
                     <p>Designs and maintains the physical hydroponic systems, deep water culture beds, PVC piping, and the physical greenhouse frameworks.</p>
                 </div>
 
-                <!-- Documentation Sector -->
                 <div class="card">
                     <div class="profile-pic">📝</div>
                     <h3>Documentation Team</h3>
@@ -76,24 +68,20 @@
             </div>
         </section>
 
-        <!-- Behind The Scenes / Photo Gallery Section -->
         <section class="content-section">
             <h2 class="section-title">Behind the Scenes</h2>
             <div class="gallery-grid">
                 
-                <!-- Action Shot 1 -->
                 <div class="gallery-item">
                     <img src="1000057516.jpeg" alt="growing of sapling" class="gallery-img" style="display:block;" onclick="openModal(this)">
                     <div class="gallery-caption">growing of sapling</div>
                 </div>
 
-                <!-- Action Shot 2 -->
                 <div class="gallery-item">
                     <img src="1000058467.jpeg" alt="nutrient packs" class="gallery-img" style="display:block;" onclick="openModal(this)">
                     <div class="gallery-caption">nutrient packs</div>
                 </div>
 
-                <!-- Action Shot 3 -->
                 <div class="gallery-item">
                     <img src="1000090750.jpeg" alt="explaining function of nutrients" class="gallery-img" style="display:block;" onclick="openModal(this)">
                     <div class="gallery-caption">explaining function of nutrients</div>
@@ -102,7 +90,6 @@
             </div>
         </section>
 
-        <!-- Join Us Section -->
         <section class="join-us">
             <h2>Want to get involved?</h2>
             <p>We are always looking for students who are interested in coding, biology, or just want to learn how to grow their own food. We meet on Sundays in the North Wing Lab.</p>
@@ -111,7 +98,6 @@
 
     </main>
 
-    <!-- Modal (Lightbox) for Images -->
     <div id="image-modal" class="modal">
         <span class="close-modal" onclick="closeModal()">&times;</span>
         <span class="prev-modal" onclick="changeImage(-1, event)">&#10094;</span>
@@ -120,7 +106,6 @@
         <div id="modal-caption" class="modal-caption-text"></div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         // ==========================================
         // UI & THEME TOGGLE LOGIC
