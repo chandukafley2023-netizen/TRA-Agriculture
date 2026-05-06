@@ -4,59 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Greenhouses | TRA Agriculture</title>
+    <!-- Linked to the master stylesheet! -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <nav>
-        <a href="index.html" class="logo" title="Go to Home/Dashboard">🌱 TRA Agri-Tech</a>
-        
-        <div class="hamburger" id="hamburger-menu">☰</div>
-
-        <div class="nav-links" id="nav-links">
-            <a href="index.html">Dashboard</a>
-            <a href="greenhouses.html" class="active">Greenhouses</a>
-            <a href="mushroom.html">Mushroom Hut</a>
-            <a href="ourteam.html">Our Team</a>
-            <button class="theme-btn" id="theme-toggle">🌙 Dark Mode</button>
+    <!-- NEW LEFT SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <span style="background: var(--text-primary); color: white; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">🌱</span>
+            TRA Agri-Tech
         </div>
-    </nav>
 
-    <main class="page-container">
+        <div class="menu-group">
+            <span class="menu-label">Telemetry</span>
+            <nav class="sidebar-nav">
+                <a href="index.html"><span>⏺</span> Command Center</a>
+                <a href="greenhouse.html" class="active"><span>💧</span> Hydroponics Grid</a>
+                <a href="mushroom.html"><span>🍄</span> Fungi Culture</a>
+            </nav>
+        </div>
+
+        <div class="menu-group">
+            <span class="menu-label">Organization</span>
+            <nav class="sidebar-nav">
+                <a href="teampage.html"><span>👥</span> Personnel & Academics</a>
+                <a href="portal.html"><span>⚙️</span> System Config</a>
+            </nav>
+        </div>
+
+        <div class="user-profile-widget">
+            <div class="user-info">
+                <div class="avatar">👤</div>
+                <div>
+                    <div style="font-weight: 700; font-size: 0.9rem;">Guest Viewer</div>
+                    <div style="font-size: 0.8rem; color: var(--text-tertiary);">Read-Only Access</div>
+                </div>
+            </div>
+            <button class="login-btn" onclick="window.location.href='portal.html'">Member Login</button>
+        </div>
+    </aside>
+
+    <!-- UPDATED MAIN WRAPPER -->
+    <main class="main-wrapper">
         
-        <!-- Hero Banner -->
-        <header class="page-banner">
-            <h1>The North Wing Greenhouses</h1>
-            <p>Welcome to the core of our agricultural technology program. Our twin greenhouses are climate-controlled, soil-free environments designed to maximize yield, minimize water usage, and serve as a living laboratory for TRA students.</p>
+        <header class="top-header">
+            <div class="page-title">
+                <h1>The North Wing Greenhouses</h1>
+                <p style="color: var(--text-secondary); margin-top: 5px;">Climate-controlled, soil-free environments designed to maximize yield.</p>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="🔍 Search systems, crops...">
+            </div>
         </header>
 
         <!-- Our Systems Section -->
-        <section class="content-section">
-            <h2>Our Hydroponic Systems</h2>
-            <div class="system-grid">
+        <section class="content-section" style="margin-bottom: 40px;">
+            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 20px;">Hydroponic Infrastructure</h2>
+            <div class="telemetry-grid">
                 
                 <!-- DWC Card -->
                 <div class="card">
-                    <div class="card-image-placeholder">🌊</div>
-                    <h3>Deep Water Culture (DWC)</h3>
-                    <p>In our DWC beds, plant roots are suspended directly in highly oxygenated, nutrient-rich water. This system is incredibly fast-growing and water-efficient, making it perfect for our leafy greens.</p>
-                    <span class="tech-badge">Sensor Monitored</span>
+                    <div class="card-icon" style="background: var(--accent-blue-light); color: var(--accent-blue); margin-bottom: 15px; font-size: 1.5rem; width: 45px; height: 45px;">🌊</div>
+                    <h3 style="margin: 0 0 10px 0; font-size: 1.1rem;">Deep Water Culture</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; flex-grow: 1;">Roots are suspended directly in highly oxygenated, nutrient-rich water. Perfect for leafy greens.</p>
+                    <span style="display: inline-block; padding: 4px 10px; background: #f1f5f9; border-radius: 12px; font-size: 0.75rem; font-weight: 700; margin-top: 15px; width: fit-content;">Sensor Monitored</span>
                 </div>
 
                 <!-- NFT Card -->
                 <div class="card">
-                    <div class="card-image-placeholder">🚰</div>
-                    <h3>Nutrient Film Technique (NFT)</h3>
-                    <p>NFT uses shallow PVC channels to flow a very thin "film" of water constantly past the plant roots. This ensures the plants get exactly the nutrients they need while exposing the upper roots to abundant oxygen.</p>
-                    <span class="tech-badge">Automated Flow</span>
+                    <div class="card-icon" style="background: var(--accent-green-light); color: var(--accent-green); margin-bottom: 15px; font-size: 1.5rem; width: 45px; height: 45px;">🚰</div>
+                    <h3 style="margin: 0 0 10px 0; font-size: 1.1rem;">Nutrient Film Tech</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; flex-grow: 1;">Shallow PVC channels flow a very thin film of water constantly past the plant roots.</p>
+                    <span style="display: inline-block; padding: 4px 10px; background: #f1f5f9; border-radius: 12px; font-size: 0.75rem; font-weight: 700; margin-top: 15px; width: fit-content;">Automated Flow</span>
                 </div>
 
                 <!-- Dutch Bucket Card -->
                 <div class="card">
-                    <div class="card-image-placeholder">🍅</div>
-                    <h3>Dutch Bucket System</h3>
-                    <p>For large, vining plants like tomatoes and cucumbers, we use heavy-duty buckets filled with a lightweight medium (like clay pebbles). A drip emitter feeds each plant individually.</p>
-                    <span class="tech-badge">Drip Irrigation</span>
+                    <div class="card-icon" style="background: var(--accent-orange-light); color: var(--accent-orange); margin-bottom: 15px; font-size: 1.5rem; width: 45px; height: 45px;">🍅</div>
+                    <h3 style="margin: 0 0 10px 0; font-size: 1.1rem;">Dutch Buckets</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; flex-grow: 1;">Heavy-duty buckets filled with clay pebbles. A drip emitter feeds large vining plants individually.</p>
+                    <span style="display: inline-block; padding: 4px 10px; background: #f1f5f9; border-radius: 12px; font-size: 0.75rem; font-weight: 700; margin-top: 15px; width: fit-content;">Drip Irrigation</span>
                 </div>
 
             </div>
@@ -64,25 +92,31 @@
 
         <!-- Current Crops Section -->
         <section class="content-section">
-            <h2>Currently Cultivating</h2>
-            <div class="crop-grid">
+            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 20px;">Active Cultivation</h2>
+            <div class="telemetry-grid">
                 
-                <div class="card">
-                    <div class="card-image-placeholder">🥬</div>
-                    <h3>Butterhead Lettuce</h3>
-                    <p>Our staple crop. Grown in the DWC beds, this lettuce goes from seedling to full harvest in just under 35 days. It thrives in our targeted 22°C water temperature.</p>
+                <div class="card" style="flex-direction: row; align-items: center; gap: 20px; padding: 20px;">
+                    <div style="font-size: 2.5rem; background: #f8fafc; padding: 15px; border-radius: 16px; border: 1px solid var(--border-color);">🥬</div>
+                    <div>
+                        <h3 style="margin: 0 0 5px 0;">Butterhead Lettuce</h3>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">35-day cycle • DWC System</p>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-image-placeholder">🌿</div>
-                    <h3>Genovese Basil</h3>
-                    <p>Housed in our NFT channels, our basil provides a highly aromatic yield. Hydroponic basil grows exceptionally fast because it never has to fight soil resistance.</p>
+                <div class="card" style="flex-direction: row; align-items: center; gap: 20px; padding: 20px;">
+                    <div style="font-size: 2.5rem; background: #f8fafc; padding: 15px; border-radius: 16px; border: 1px solid var(--border-color);">🌿</div>
+                    <div>
+                        <h3 style="margin: 0 0 5px 0;">Genovese Basil</h3>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Continuous harvest • NFT</p>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-image-placeholder">🍓</div>
-                    <h3>Alpine Strawberries</h3>
-                    <p>An experimental crop for the club this semester! We are carefully tweaking the Potassium and Phosphorus (EC) levels in the reservoir to encourage sweet, continuous fruiting.</p>
+                <div class="card" style="flex-direction: row; align-items: center; gap: 20px; padding: 20px;">
+                    <div style="font-size: 2.5rem; background: #f8fafc; padding: 15px; border-radius: 16px; border: 1px solid var(--border-color);">🍓</div>
+                    <div>
+                        <h3 style="margin: 0 0 5px 0;">Alpine Strawberries</h3>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Experimental phase • EC tuning</p>
+                    </div>
                 </div>
 
             </div>
@@ -90,37 +124,5 @@
 
     </main>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // ==========================================
-        // UI & THEME TOGGLE LOGIC (Matches Dashboard)
-        // ==========================================
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const hamburgerMenu = document.getElementById('hamburger-menu');
-        const navLinks = document.getElementById('nav-links');
-        
-        // Mobile Hamburger Menu Toggle
-        hamburgerMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Light/Dark Theme Logic
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.setAttribute('data-theme', 'dark');
-            themeToggleBtn.innerHTML = '☀️ Light Mode';
-        }
-
-        themeToggleBtn.addEventListener('click', () => {
-            if (document.body.getAttribute('data-theme') === 'dark') {
-                document.body.removeAttribute('data-theme');
-                themeToggleBtn.innerHTML = '🌙 Dark Mode';
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.body.setAttribute('data-theme', 'dark');
-                themeToggleBtn.innerHTML = '☀️ Light Mode';
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    </script>
 </body>
 </html>
